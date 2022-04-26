@@ -1,0 +1,23 @@
+.navigation {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.button {
+  background: #3DDC84;
+  border-radius: 3px;
+  border: 0;
+  padding: 9px 20px;
+
+}
+
+.navigation__link {
+  text-decoration: none;
+  color: #FFFFFF;
+  padding-right: 30px;
+}
+
+.navigation__link:last-child {
+  padding-right: 0;
+}

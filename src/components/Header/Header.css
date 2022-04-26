@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 21px 70px 29px 40px;
+  margin: auto;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+}
+

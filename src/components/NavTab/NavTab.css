@@ -1,0 +1,25 @@
+.nav-tab {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.nav-tab__point {
+  background: #303030;
+  border-radius: 10px;
+  min-width: 96px;
+  min-height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+}
+
+.nav-tab__link {
+  font-size: 12px;
+  line-height: 1.33;
+  font-weight: 500;
+  margin: 0 13px;
+  
+}
