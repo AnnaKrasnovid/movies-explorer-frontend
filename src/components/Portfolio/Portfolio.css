@@ -2,6 +2,12 @@
   padding-bottom: 125px;
 }
 
+@media screen and (max-width: 1023px) {
+  .portfolio {
+    padding-bottom: 92px;
+  }
+}
+
 .portfolio__title {
   font-weight: 400;
   font-size: 18px;
@@ -29,6 +35,13 @@
   line-height: 1.67;
   letter-spacing: -0.04em;
   margin: 21px 0 18px;
+}
+
+@media screen and (max-width: 1023px) {
+  .portfolio__website {
+    font-size: 28px;
+    line-height: 1.79;
+  }
 }
 
 .portfolio__link {
