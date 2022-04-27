@@ -24,3 +24,20 @@
   text-decoration: none;
   color: #fff;
 }
+
+@media screen and (max-width: 767px) {
+  .nav-tab__list {
+    margin-bottom: 15px;
+  }
+  .nav-tab__point {
+    min-width: 82px;
+    min-height: 26px;
+    border-radius: 6px;
+    margin: 0 3px;
+  }
+
+  .nav-tab__link {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}

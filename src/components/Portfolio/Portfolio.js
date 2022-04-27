@@ -2,7 +2,7 @@ import './Portfolio.css';
 
 function Portfolio() {
   return (
-    <section className="portfolio section-side-padding">
+    <section className="portfolio">
       <h2 className="portfolio__title">Портфолио</h2>
       <ul className="portfolio__container">
         <li className="portfolio__box">

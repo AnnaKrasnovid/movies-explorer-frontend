@@ -14,6 +14,7 @@
   width: 100%;
   color: #fff;
   font-family: 'Inter', Arial, sans-serif;
+  margin: auto;
 }
 
 .section-side-padding {
@@ -26,5 +27,12 @@
   .section-side-padding {
     padding-left: 50px;
     padding-right: 50px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .section-side-padding {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 }
