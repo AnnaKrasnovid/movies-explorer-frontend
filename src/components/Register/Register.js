@@ -54,7 +54,7 @@ function Register() {
         <button className="form__button" type="submit">Зарегистрироваться</button>
         <div className="form__link-container">
           <p className="form__question">Уже зарегистрированы?</p>
-          <Link to="signin" className="form__login-link">Войти</Link>
+          <Link to="signin" className="link">Войти</Link>
         </div>
       </form>
 
