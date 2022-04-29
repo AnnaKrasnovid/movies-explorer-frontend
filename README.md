@@ -41,5 +41,5 @@ npm install
 npm start
 ```
 
-#### [Ссылки на макет в Figma](https://www.figma.com/proto/9tcwP29sbHIX2Ozhaa8mER/Diploma-Copy?node-id=891%3A3857)
+#### [Ссылкa на макет в Figma](https://www.figma.com/proto/9tcwP29sbHIX2Ozhaa8mER/Diploma-Copy?node-id=891%3A3857)
 

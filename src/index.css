@@ -4,9 +4,6 @@
 #root {
   background-color: #202020;;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .page {
@@ -15,24 +12,4 @@
   color: #fff;
   font-family: 'Inter', Arial, sans-serif;
   margin: auto;
-}
-
-.section-side-padding {
-  padding-left: 70px;
-  padding-right: 70px;
-  margin: auto;
-}
-
-@media screen and (max-width: 1023px) {
-  .section-side-padding {
-    padding-left: 50px;
-    padding-right: 50px;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .section-side-padding {
-    padding-left: 14px;
-    padding-right: 14px;
-  }
 }
