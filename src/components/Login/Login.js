@@ -2,7 +2,7 @@ import '../Entrance/Entrance.css';
 import Logo from '../../images/icon-logo.svg';
 import { Link } from 'react-router-dom';
 
-function Register() {
+function Login() {
   return (
     <section className="entrance">
       <img className="logo" src={Logo} alt="Логотип" />
@@ -49,4 +49,4 @@ function Register() {
   )
 }
 
-export default Register;
+export default Login;

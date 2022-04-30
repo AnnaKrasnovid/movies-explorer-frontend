@@ -2,7 +2,7 @@ import './Footer.css';
 
 function Footer() {
   return (
-    <section className="footer">
+    <footer className="footer">
       <h4 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h4>
       <div className="footer__container">
         <p className="footer__copyright">&copy; 2022</p>
@@ -14,11 +14,11 @@ function Footer() {
             <a className="social-networks__link social-networks__link_type_footer" href="https://github.com/AnnaKrasnovid">Github</a>
           </li>
           <li>
-            <a className="social-networks__link social-networks__link_type_footer" href="#">Facebook</a>
+            <a className="social-networks__link social-networks__link_type_footer" href="https://github.com/AnnaKrasnovid">Facebook</a>
           </li>
         </ul>
       </div>
-    </section>
+    </footer>
   )
 }
 
