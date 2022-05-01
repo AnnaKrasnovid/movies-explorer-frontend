@@ -2,8 +2,8 @@ import './SearchForm.css';
 
 function SearchForm() {
   return (
-    <section >
-      <input ></input>
+    <section className="search">
+      <input className="search__input"></input>
       <img ></img>
     </section>
   )

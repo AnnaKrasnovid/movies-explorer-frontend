@@ -4,7 +4,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function Movies() {
   return (
-    <section className="movies">
+    <section className="movies-page">
       <SearchForm />
       <MoviesCardList />
     </section>

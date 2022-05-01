@@ -1,0 +1,31 @@
+.movies {
+  padding-top: 80px;
+width: 100%;
+}
+
+.movies-list {
+  /*display: grid;
+  grid-template-columns: repeat(auto-fit, 1fr);
+  gap: 38px 20px;
+  grid-template-rows: auto;*/
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.movies__container {
+
+}
+
+.movies__button-more {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  border: 0;
+  background: #2F2F2F;
+  border-radius: 6px;
+  min-height: 36px;
+  width: 100%;
+  color: #FFFFFF;
+  margin-top: 21px;
+  margin-bottom: 100px;
+}

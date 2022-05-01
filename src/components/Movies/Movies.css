@@ -1,0 +1,6 @@
+.movies-page {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 70px*2);
+  margin: auto;
+}
