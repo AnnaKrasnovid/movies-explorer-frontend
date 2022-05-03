@@ -4,11 +4,11 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 function MoviesCardList() {
   return (
     <section className="movies">
+      <div className="movies__container">
       <ul className="movies-list">
         <MoviesCard />
       </ul>
-
-        <button className="movies__button-more">Ещё</button>
+      </div>
 
     </section>
   )

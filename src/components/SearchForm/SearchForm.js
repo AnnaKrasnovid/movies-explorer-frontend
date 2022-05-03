@@ -3,8 +3,11 @@ import './SearchForm.css';
 function SearchForm() {
   return (
     <section className="search">
-      <input className="search__input"></input>
-      <img ></img>
+      <div className="search__container">
+        <input className="search__input" type="text" placeholder="Фильм"></input>
+        <div className="search__magnifier"></div>
+      </div>
+
     </section>
   )
 }

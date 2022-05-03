@@ -1,13 +1,15 @@
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
 function Movies() {
   return (
-    <section className="movies-page">
+    <main className="movies-page">
       <SearchForm />
       <MoviesCardList />
-    </section>
+      <ShowMoreButton />
+    </main>
   )
 }
 
