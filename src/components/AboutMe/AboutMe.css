@@ -60,7 +60,13 @@
   line-height: 17px;
   text-decoration: none;
   color: #fff;
+  cursor: pointer;
 }
+
+/*.social-networks__link:hover {
+  opacity: 0.7;
+  transition: ease;
+}*/
 
 @media screen and (max-width: 1023px) {
   .about-me {

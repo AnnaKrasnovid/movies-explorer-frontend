@@ -8,13 +8,13 @@ function Footer() {
         <p className="footer__copyright">&copy; 2022</p>
         <ul className="social-networks social-networks_type_footer">
           <li>
-            <a className="social-networks__link social-networks__link_type_footer" href="https://practicum.yandex.ru/web/">Яндекс.Практикум</a>
+            <a className="social-networks__link social-networks__link_type_footer hover-link" href="https://practicum.yandex.ru/web/">Яндекс.Практикум</a>
           </li>
           <li>
-            <a className="social-networks__link social-networks__link_type_footer" href="https://github.com/AnnaKrasnovid">Github</a>
+            <a className="social-networks__link social-networks__link_type_footer hover-link" href="https://github.com/AnnaKrasnovid">Github</a>
           </li>
           <li>
-            <a className="social-networks__link social-networks__link_type_footer" href="https://github.com/AnnaKrasnovid">Facebook</a>
+            <a className="social-networks__link social-networks__link_type_footer hover-link" href="https://github.com/AnnaKrasnovid">Facebook</a>
           </li>
         </ul>
       </div>

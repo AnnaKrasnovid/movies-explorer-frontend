@@ -4,6 +4,24 @@
   line-height: 16px;
 }
 
+.button {
+  font-weight: 500;
+  border: 0;
+  border-radius: 3px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/*.button:hover {
+  opacity: 0.8;
+  transition: ease;
+}*/
+
+.hover-button:hover {
+  opacity: 0.8;
+  transition: ease;
+}
+
 .button_type_header {
   background: #3DDC84;
   padding: 9px 20px;
@@ -12,7 +30,13 @@
 .link {
   text-decoration: none;
   color: #FFFFFF;
+  cursor: pointer;
 }
+
+/*.link:hover {
+  opacity: 0.7;
+  transition: ease;
+}*/
 
 .link_type_main {
   padding-right: 30px;

@@ -2,7 +2,7 @@ import './ShowMoreButton.css';
 
 function ShowMoreButton() {
   return (
-    <button className="button button_type_more">Ещё</button>
+    <button className="button button_type_more hover-button">Ещё</button>
   )
 }
 

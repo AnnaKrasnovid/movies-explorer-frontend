@@ -7,15 +7,15 @@ function Portfolio() {
       <ul className="portfolio__container">
         <li className="portfolio__box">
           <p className="portfolio__website">Статичный сайт</p>
-          <a className="portfolio__link" href="https://annakrasnovid.github.io/how-to-learn/"></a>
+          <a className="portfolio__link hover-link" href="https://annakrasnovid.github.io/how-to-learn/"></a>
         </li>
         <li className="portfolio__box">
           <p className="portfolio__website">Адаптивный сайт</p>
-          <a className="portfolio__link" href="https://annakrasnovid.github.io/russian-travel/"></a>
+          <a className="portfolio__link hover-link" href="https://annakrasnovid.github.io/russian-travel/"></a>
         </li>
         <li className="portfolio__box">
           <p className="portfolio__website">Одностраничное приложение</p>
-          <a className="portfolio__link" href="https://krasnovid.students.nomoredomains.work/"></a>
+          <a className="portfolio__link hover-link" href="https://krasnovid.students.nomoredomains.work/"></a>
         </li>
       </ul>
     </section>

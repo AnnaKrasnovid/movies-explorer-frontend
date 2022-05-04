@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 function Login() {
   return (
     <section className="entrance">
-      <img className="logo" src={Logo} alt="Логотип" />
+      <Link to='/' className="link">
+        <img className="logo" src={Logo} alt="Логотип" />
+      </Link>
       <h2 className="entrance__title">Рады видеть!</h2>
       <form className="form form_type_register">
         <fieldset className="form__container">
@@ -38,10 +40,10 @@ function Login() {
 
         </fieldset>
 
-        <button className="button button_type_entrance" type="submit">Войти</button>
+        <button className="button button_type_form hover-button" type="submit">Войти</button>
         <div className="form__link-container">
           <p className="form__question">Ещё не зарегистрированы?</p>
-          <Link to="signup" className="link link_type_entrance">Регистрация</Link>
+          <Link to="signup" className="link link_type_entrance hover-link">Регистрация</Link>
         </div>
       </form>
 

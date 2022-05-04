@@ -5,8 +5,13 @@ import { Link } from 'react-router-dom';
 
 function Register() {
   return (
+
+
+
     <section className="entrance">
-      <img className="logo" src={Logo} alt="Логотип" />
+      <Link to='/'>
+        <img className="logo hover-button" src={Logo} alt="Логотип" />
+      </Link>
       <h2 className="entrance__title">Добро пожаловать!</h2>
       <form className="form form_type_register">
         <fieldset className="form__container">
@@ -51,10 +56,10 @@ function Register() {
           </div>
         </fieldset>
 
-        <button className="button button_type_entrance" type="submit">Зарегистрироваться</button>
+        <button className="button button_type_form hover-button" type="submit">Зарегистрироваться</button>
         <div className="form__link-container">
           <p className="form__question">Уже зарегистрированы?</p>
-          <Link to="signin" className="link link_type_entrance">Войти</Link>
+          <Link to="signin" className="link link_type_entrance hover-link">Войти</Link>
         </div>
       </form>
 

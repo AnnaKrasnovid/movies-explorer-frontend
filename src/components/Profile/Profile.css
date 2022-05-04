@@ -65,6 +65,34 @@
   color: #EE3465;
 }
 
+.profile__link-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: none;
+}
+
+.profile__button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.profile__error {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #EE3465;
+  margin-bottom: 20px;
+}
+
+.button_disabled {
+  background-color: #F8F8F8;
+  color: #C2C2C2;
+  cursor: default;
+}
+
 @media screen and (max-width: 1023px) {
   .profile {
     padding-top: 212px;

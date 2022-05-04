@@ -19,11 +19,6 @@
   margin: 5px 0 184px;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 @media screen and (max-width: 1023px) {
   .not-found__error {
     margin-top: 328px;
