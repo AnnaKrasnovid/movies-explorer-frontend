@@ -16,10 +16,10 @@ function Navigation() {
   }*/
 
   return (
-    <div className='navigation'>
-      <Link to='/signup' className='navigation__link'>Регистрация</Link>
-      <Link to='/signin' className='navigation__link'>
-        <button className='button' >Войти</button>
+    <div className="navigation">
+      <Link to='/signup' className="link link_type_main">Регистрация</Link>
+      <Link to='/signin' className="link">
+        <button className="button button_type_header" >Войти</button>
       </Link>
     </div>
   )

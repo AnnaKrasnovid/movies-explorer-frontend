@@ -4,25 +4,27 @@
   line-height: 16px;
 }
 
-.button {
+.button_type_header {
   background: #3DDC84;
-  border-radius: 3px;
-  border: 0;
   padding: 9px 20px;
 }
 
-.navigation__link {
+.link {
   text-decoration: none;
   color: #FFFFFF;
+}
+
+.link_type_main {
   padding-right: 30px;
 }
 
-.navigation__link:last-child {
+
+.link_type_main:last-child {
   padding-right: 0;
 }
 
 @media screen and (max-width: 767px) {
-  .button {
+  .button_type_header {
     padding: 7px 12px;
   }
 
@@ -31,7 +33,7 @@
     line-height: 1.6;
   }
 
-  .navigation__link {
+  .link_type_main {
     padding-right: 15px;
   }
 }

@@ -11,7 +11,7 @@ function Login() {
         <fieldset className="form__container">
 
           <div className="form__input-container">
-            <label className="form__label" for="email">E-mail</label>
+            <label className="form__label" for="email-input">E-mail</label>
             <input
               id="email-input"
               className="form__input form__input_info_email"
@@ -25,7 +25,7 @@ function Login() {
           </div>
 
           <div className="form__input-container">
-            <label className="form__label" for="password">Пароль</label>
+            <label className="form__label" for="password-input">Пароль</label>
             <input
               id="password-input"
               className="form__input form__input_info_password"
@@ -38,10 +38,10 @@ function Login() {
 
         </fieldset>
 
-        <button className="form__button" type="submit">Войти</button>
+        <button className="button button_type_entrance" type="submit">Войти</button>
         <div className="form__link-container">
           <p className="form__question">Ещё не зарегистрированы?</p>
-          <Link to="signup" className="link">Регистрация</Link>
+          <Link to="signup" className="link link_type_entrance">Регистрация</Link>
         </div>
       </form>
 

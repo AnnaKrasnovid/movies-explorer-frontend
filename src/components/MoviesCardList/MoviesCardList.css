@@ -6,12 +6,6 @@
   align-items: center;*/
 }
 
-.movies__container {
-  display: flex;
-  flex-direction: column;
-
-}
-
 .movies-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, 270px);
