@@ -1,7 +1,10 @@
 .navigation {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.navigation_type_logged-in {
+  align-items: center;
 }
 
 .button {
@@ -12,11 +15,6 @@
   cursor: pointer;
 }
 
-/*.button:hover {
-  opacity: 0.8;
-  transition: ease;
-}*/
-
 .hover-button:hover {
   opacity: 0.8;
   transition: ease;
@@ -25,6 +23,9 @@
 .button_type_header {
   background: #3DDC84;
   padding: 9px 20px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .link {
@@ -33,18 +34,51 @@
   cursor: pointer;
 }
 
-/*.link:hover {
-  opacity: 0.7;
-  transition: ease;
-}*/
-
 .link_type_main {
   padding-right: 30px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
 }
-
 
 .link_type_main:last-child {
   padding-right: 0;
+}
+
+.link_type_logged-in {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin-left: 20px;
+}
+
+.link_type_account {
+  display: flex;
+  align-items: center;
+}
+
+.link_active {
+  font-weight: 500;
+}
+
+.navigation__account {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  margin-right: 17px;
+  margin: 0 17px 0 50px;
+}
+
+.navigation__account-icon {
+  background-image: url(../../images/icon-account.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 14px;
+  width: 11.5px;
+  background-color: #313131;
+  border-radius: 4px;
+  height: 30px;
+  width: 26px;
 }
 
 @media screen and (max-width: 767px) {

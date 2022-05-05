@@ -57,6 +57,11 @@
   line-height: 16px;
 }
 
+/*класс для ошибки */
+.form__input-error {
+  color: #EE3465;
+}
+
 .form__error {
   font-weight: 400;
   font-size: 10px;

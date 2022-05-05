@@ -14,10 +14,10 @@ function AboutMe() {
             и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.</p>
           <ul className="social-networks">
             <li>
-              <a className="social-networks__link hover-link" href="#">Facebook</a>
+              <a className="social-networks__link hover-link" href="#" target="blank">Facebook</a>
             </li>
             <li>
-              <a className="social-networks__link hover-link" href="https://github.com/AnnaKrasnovid">Github</a>
+              <a className="social-networks__link hover-link" href="https://github.com/AnnaKrasnovid" target="blank">Github</a>
             </li>
           </ul>
         </div>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <header className="header">
+    <header className="header header_type_logged-in">
       <Link to="/">
         <img className="logo hover-button" src={Logo} alt="Логотип" />
       </Link>

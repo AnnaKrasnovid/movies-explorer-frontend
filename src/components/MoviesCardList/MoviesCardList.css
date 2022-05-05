@@ -25,6 +25,11 @@ padding: 0;
 }
 
 @media screen and (max-width: 767px) {
+  .movies {
+    padding-top: 35px;
+    min-height: 716px;
+  }
+
   .movies-list {
     grid-template-columns: repeat(auto-fit, 300px);
     justify-content: center;

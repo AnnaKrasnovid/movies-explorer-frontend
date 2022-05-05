@@ -16,13 +16,25 @@ function Navigation() {
   }*/
 
   return (
-    <div className="navigation">
-      <Link to='/signup' className="link link_type_main hover-link">Регистрация</Link>
-      <Link to='/signin' className="link">
-        <button className="button button_type_header hover-button" >Войти</button>
+    <div className="navigation navigation_type_logged-in">
+      <Link to="/movies" className="link link_type_logged-in hover-link">Фильмы</Link>
+      <Link to="/saved-movies" className="link link_type_logged-in hover-link">Сохранённые фильмы</Link>
+      <Link to="/profile" className="link link_type_account hover-link">
+        <p className="navigation__account">Аккаунт</p>
+        <div className="navigation__account-icon"></div>
       </Link>
     </div>
   )
 }
 
 export default Navigation;
+/*<Link to='/signup' className="link link_type_main hover-link">Регистрация</Link>
+      <Link to='/signin' className="link">
+        <button className="button button_type_header hover-button" >Войти</button>
+      </Link>*/
+/*<Link to="/movies" className="link link_type_logged-in hover-link">Фильмы</Link>
+      <Link to="/saved-movies" className="link link_type_logged-in hover-link">Сохранённые фильмы</Link>
+      <div className="navigation__container">
+        <p className="navigation__account">Аккаунт</p>
+        <div className="navigation__account-icon"></div>
+      </div>*/
