@@ -13,24 +13,27 @@
   padding: 19px;
   border-radius: 9px;
   display: grid;
-  grid-template-columns: 1fr 210px;
+  grid-template-columns: 1fr 220px;
+
+
+  grid-auto-flow: column;
 }
 
 .search__input {
   background-color: #222222;
   padding: 0;
-  /*background-color: #202020;*/
   border: 0;
   outline: none;
   color: #FFFFFF;
   padding: 0 22px;
+  width: 80%;
 }
 
 .search__input::placeholder {
   font-weight: 400;
-font-size: 18px;
-line-height: 1.11;
-color: #8B8B8B;
+  font-size: 18px;
+  line-height: 1.11;
+  color: #8B8B8B;
 }
 
 .search__magnifier {
@@ -46,7 +49,8 @@ color: #8B8B8B;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-right: 1px solid #505050;;
+  border-right: 1px solid #505050;
+  ;
   padding-right: 20px;
 }
 
@@ -58,6 +62,7 @@ color: #8B8B8B;
 
 .search__box-search {
   display: flex;
+  width: 100%;
 }
 
 .search__button {
@@ -66,10 +71,10 @@ color: #8B8B8B;
   background-position: center;
   background-color: #4285F4;
   height: 34px;
-width: 34px;
-padding: 0;
-border-radius: 50%;
-border: 0;
+  width: 34px;
+  padding: 0;
+  border-radius: 50%;
+  border: 0;
 }
 
 .search__checked-title {
@@ -77,5 +82,77 @@ border: 0;
   font-weight: 400;
   font-size: 13px;
   line-height: 1.38;
+}
 
+/* Слайдер */
+.search__checkbox {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.search__checkbox-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.search__checkbox-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #343434;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 20px;
+}
+
+.search__checkbox-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+
+  background-color: #FFFFFF;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+  border: 1px solid #FFFFFF;
+}
+
+.search__checkbox-input:checked+.search__checkbox-slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+  background-color: #2BE080;
+}
+
+
+@media screen and (max-width: 1023px) {
+  .search {
+    padding-top: 55px;
+    padding-bottom: 110px;
+  }
+
+  .search__container {
+    grid-template-columns: 1fr 190px;
+  }
+
+  .search__box-checkbox {
+    justify-content: end;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .search__container {
+    grid-template-columns: 1fr;
+
+    grid-template-rows: repeat(2, 1fr);
+  }
 }
