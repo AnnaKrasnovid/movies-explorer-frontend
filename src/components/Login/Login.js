@@ -13,7 +13,7 @@ function Login() {
         <fieldset className="form__container">
 
           <div className="form__input-container">
-            <label className="form__label" for="email-input">E-mail</label>
+            <label className="form__label" htmlFor="email-input">E-mail</label>
             <input
               id="email-input"
               className="form__input form__input_info_email"
@@ -27,7 +27,7 @@ function Login() {
           </div>
 
           <div className="form__input-container">
-            <label className="form__label" for="password-input">Пароль</label>
+            <label className="form__label" htmlFor="password-input">Пароль</label>
             <input
               id="password-input"
               className="form__input form__input_info_password"
