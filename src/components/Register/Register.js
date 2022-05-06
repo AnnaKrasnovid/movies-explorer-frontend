@@ -1,17 +1,11 @@
-// import './Register.css';
 import '../Entrance/Entrance.css';
-import Logo from '../../images/icon-logo.svg';
+import Logo from '../Logo/Logo';
 import { Link } from 'react-router-dom';
 
 function Register() {
   return (
-
-
-
     <section className="entrance">
-      <Link to='/'>
-        <img className="logo hover-button" src={Logo} alt="Логотип" />
-      </Link>
+      <Logo />
       <h2 className="entrance__title">Добро пожаловать!</h2>
       <form className="form form_type_register">
         <fieldset className="form__container">
@@ -62,7 +56,6 @@ function Register() {
           <Link to="signin" className="link link_type_entrance hover-link">Войти</Link>
         </div>
       </form>
-
     </section>
   )
 }

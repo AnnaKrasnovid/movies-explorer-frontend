@@ -1,13 +1,11 @@
 import '../Entrance/Entrance.css';
-import Logo from '../../images/icon-logo.svg';
+import Logo from '../Logo/Logo';
 import { Link } from 'react-router-dom';
 
 function Login() {
   return (
     <section className="entrance">
-      <Link to='/' className="link">
-        <img className="logo" src={Logo} alt="Логотип" />
-      </Link>
+     <Logo />
       <h2 className="entrance__title">Рады видеть!</h2>
       <form className="form form_type_register">
         <fieldset className="form__container">

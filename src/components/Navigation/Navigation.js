@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 function Navigation() {
   const location = useLocation()
-  console.log(location)
+  //console.log(location)
 
   function headerLocation() {
     if (location.pathname === '/') {

@@ -47,7 +47,7 @@ function Profile() {
       </div>
       ) : (
         <div className="profile__button-container">
-        <span className="profile__error">При обновлении профиля произошла ошибка.</span>
+        <span className="profile__error"></span>
         <button className="button button_type_form hover-button" type="submit">Сохранить</button>
       </div>
       )}
