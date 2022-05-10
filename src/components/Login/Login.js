@@ -33,7 +33,7 @@ function Login() {
               name="password"
               placeholder="Пароль"
               required />
-            <span id="password-input-error" className="form__error">Что-то пошло не так...</span>
+            <span id="password-input-error" className="form__error"></span>
           </div>
 
         </fieldset>

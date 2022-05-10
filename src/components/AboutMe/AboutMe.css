@@ -16,6 +16,7 @@
   height: 327px;
   width: 270px;
   margin-left: 50px;
+  object-fit: cover;
 }
 
 .about-me__description {
