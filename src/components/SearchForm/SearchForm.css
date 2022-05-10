@@ -9,13 +9,9 @@
   /*min-height: 72px;*/
   height: 100%;
   width: 100%;
-  /*box-sizing: border-box;*/
-  /*padding: 19px;*/
   border-radius: 9px;
   display: grid;
   grid-template-columns: 1fr 220px;
-
-
   grid-auto-flow: column;
 }
 
@@ -50,11 +46,6 @@
   align-items: center;
   justify-content: space-between;
   border-right: 1px solid #505050;
-
-  /*padding-right: 20px;*/
-
-  /*border-radius: 9px;
-  background-color: #222222;*/
   min-height: 34px;
   margin: 19px 0 19px 19px;
   padding-right: 19px;
@@ -101,6 +92,7 @@
   display: inline-block;
   width: 36px;
   height: 20px;
+  z-index: 1;
 }
 
 .search__checkbox-input {
@@ -129,7 +121,6 @@
   width: 14px;
   left: 2px;
   bottom: 2px;
-
   background-color: #FFFFFF;
   -webkit-transition: .4s;
   transition: .4s;
@@ -157,6 +148,7 @@
 
   .search__box-checkbox {
     justify-content: end;
+    padding-left: 0;
   }
 }
 

@@ -1,9 +1,11 @@
 import './Header.css';
+import React from 'react';
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import { Link, useLocation, Route } from 'react-router-dom';
 
 function Header() {
+
   const endpoints = [
     "/",
     "/profile",
@@ -12,12 +14,10 @@ function Header() {
   ];
 
   const location = useLocation();
-  console.log(location);
-  const header = `header ${(location.pathname === '/') ? '' : 'header_type_logged-in'}`;
 
   return (
     <Route exact path={endpoints}>
-      <header className={header}>
+      <header className={`header ${(location.pathname === '/') ? '' : 'header_type_logged-in'}`}>
         <Logo />
         <Navigation />
       </header>

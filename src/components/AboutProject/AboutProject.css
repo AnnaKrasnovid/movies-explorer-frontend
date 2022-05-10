@@ -119,7 +119,6 @@
   .about-project__container {
     grid-template-columns:  minmax(284px, 550px);
     grid-template-rows: 45px 87px 45px 87px;
-
     padding-top: 60px;
     padding-bottom: 22px;
   }

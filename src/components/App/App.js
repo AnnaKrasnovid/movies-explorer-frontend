@@ -12,7 +12,6 @@ import Footer from '../Footer/Footer';
 // import Entrance from '../Entrance/Entrance';
 
 function App() {
-
   return (
     <div className="page">
 

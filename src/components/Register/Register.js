@@ -1,4 +1,4 @@
-import '../Entrance/Entrance.css';
+import './Register.css';
 import Logo from '../Logo/Logo';
 import { Link } from 'react-router-dom';
 

@@ -1,19 +1,15 @@
 .movies {
   padding-top: 65px;
   width: 100%;
-  /*display: flex;
-  flex-direction: column;
-  align-items: center;*/
 }
 
 .movies-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, 270px);
-  /*grid-template-columns: repeat(4, 270px);*/
   gap: 38px 20px;
   grid-template-rows: auto;
   min-height: 490px;
-padding: 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 1023px) {

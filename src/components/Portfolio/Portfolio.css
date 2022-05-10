@@ -24,6 +24,7 @@
   border-bottom: 1px solid #424242;
   min-height: 89px;
 }
+
 .portfolio__box:last-child {
   border-bottom: none;
 }
