@@ -112,6 +112,9 @@
   .entrance {
     align-items: center;
     padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .form__container {
