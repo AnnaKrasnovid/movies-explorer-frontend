@@ -1,0 +1,17 @@
+.button_type_more {
+  font-size: 12px;
+  line-height: 15px;
+  background: #2F2F2F;
+  border-radius: 6px;
+  min-height: 36px;
+  width: 100%;
+  color: #FFFFFF;
+  margin-top: 60px;
+  margin-bottom: 100px;
+}
+
+@media screen and (max-width: 767px) {
+  .button_type_more {
+    margin-bottom: 130px;
+  }
+}

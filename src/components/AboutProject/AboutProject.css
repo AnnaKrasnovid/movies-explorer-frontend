@@ -1,0 +1,137 @@
+.about-project {
+  display: flex;
+  flex-direction: column;
+  padding-top: 110px;
+  padding-bottom: 110px;
+  width: calc(100% - 70px*2);
+}
+
+.section-title {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  border-bottom: 1px solid #dadada;
+  padding-bottom: 23px;
+  margin: 0;
+}
+
+.about-project__container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(284px, 550px));
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px 40px;
+  grid-auto-flow: column;
+  padding: 68px 0 110px;
+}
+
+.about-project__info {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.about-project__text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.43;
+  margin: 0;
+}
+
+.about-project__duration {
+  font-size: 14px;
+  line-height: 1.21;
+  display: grid;
+  grid-template-columns: 228px 1fr;
+  grid-template-rows: 36px;
+  row-gap: 15px;
+}
+
+.about-project__time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.about-project__time-back {
+  color: #000000;
+  font-weight: 400;
+  background-color: #3ddc84;
+}
+
+.about-project__time-front {
+  background-color: #303030;
+}
+
+.about-project__part {
+  color: #8b8b8b;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1023px) {
+  .about-project {
+    padding-top: 90px;
+    padding-bottom: 88px;
+    width: calc(100% - 50px*2);
+  }
+
+  .about-project__container {
+    gap: 15px 30px;
+    padding-bottom: 94px;
+  }
+
+  .about-project__text {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .about-project__duration {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .about-project {
+    padding-top: 72px;
+    padding-bottom: 54px;
+    width: calc(100% - 18px*2);
+  }
+
+  .section-title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 27px;
+  }
+
+  .about-project__info {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__text {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .about-project__container {
+    grid-template-columns:  minmax(284px, 550px);
+    grid-template-rows: 45px 87px 45px 87px;
+    padding-top: 60px;
+    padding-bottom: 22px;
+  }
+
+  .about-project__text {
+    margin-bottom: 56px;
+  }
+
+  .about-project__duration {
+    font-size: 11px;
+    line-height: 13px;
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: 35px;
+    row-gap: 9px;
+  }
+}

@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 13px 70px 33px 40px;
+  margin: auto;
+}
+
+.header_type_logged-in {
+padding-left: 70px;
+}
+
+@media screen and (max-width: 1023px) {
+  .header {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 18px 14px 19px;
+  }
+}

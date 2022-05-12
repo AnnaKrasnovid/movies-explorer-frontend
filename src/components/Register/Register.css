@@ -1,0 +1,143 @@
+.entrance {
+  max-width: 396px;
+  padding: 70px 30px 0;
+  margin: auto;
+}
+
+.entrance__title {
+  margin: 32px 0 0;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: minmax(260px, 396px);
+  width: 100%;
+}
+
+.form__container {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  margin: 40px 0 69px;
+  min-height: 267px;
+}
+
+.form__input-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 88px;
+}
+
+.form__label {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8B8B8B;
+  margin-bottom: 10px;
+}
+
+.form__input {
+  padding: 15px;
+  border: 0;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #FFFFFF;
+  background: #2F2F2F;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.form__input::placeholder {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+/*класс для ошибки */
+.form__input-error {
+  color: #EE3465;
+}
+
+.form__error {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  min-height: 12px;
+  margin-top: 9px;
+}
+
+.button_type_form {
+  background-color: #4285F4;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  padding: 14px;
+  width: 100%;
+}
+
+.button_disabled {
+  background-color: #F8F8F8;
+  color: #C2C2C2;
+  cursor: default;
+}
+
+.form__link-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  margin-top: 17px;
+}
+
+.form__question {
+  color: #8B8B8B;
+}
+
+.link_type_entrance {
+  color: #4285F4;
+  margin-left: 6px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media screen and (max-width: 767px) {
+  .entrance {
+    align-items: center;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form__container {
+    margin: 80px 0 157px;
+    min-height: 267px;
+  }
+
+  .entrance__title {
+    margin-top: 38px;
+  }
+
+  .form__link-container {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .button_type_form {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .link_type_entrance {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

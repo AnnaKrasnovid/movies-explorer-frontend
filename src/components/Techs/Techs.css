@@ -1,0 +1,125 @@
+.techs {
+  width: calc(100% - 70px*2);
+  padding: 100px 70px 98px;
+  background-color: #272727;
+}
+
+.techs__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 89px 0 0;
+}
+
+.techs__title {
+  font-size: 50px;
+  line-height: 1.16;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+  margin: 0;
+}
+
+.techs__subtitle {
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+  max-width: 460px;
+  margin: 26px 0 100px;
+}
+
+.techs-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, 90px);
+  grid-template-rows: 60px;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+.techs-list__title {
+  background-color: #303030;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width: 1023px) {
+  .techs {
+    padding: 87px 50px 88px;
+    width: calc(100% - 50px*2);
+  }
+
+  .techs__container {
+    margin-top: 81px;
+  }
+
+  .techs__subtitle {
+    margin-top: 20px;
+    margin-bottom: 86px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .techs-list {
+    grid-template-columns: repeat(7, 84px);
+    grid-template-rows: 57px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .techs {
+    width: calc(100% - 18px*2);
+    background-color:#202020;
+    padding-top: 89px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .techs__title {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .techs__subtitle {
+    font-size: 11px;
+    line-height: 1.45;
+    margin-bottom: 50px;
+    margin-top: 25px;
+  }
+
+  .techs-list__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .techs-list {
+    grid-template-columns: repeat(4, 84px);
+    grid-template-rows: repeat(2, 57px);
+  }
+
+  .techs__container {
+    margin-top: 60px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .techs-list {
+    grid-template-columns: repeat(3, 84px);
+    grid-template-rows: repeat(3, 57px);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .techs-list {
+    grid-template-columns: repeat(2, 84px);
+    grid-template-rows: repeat(4, 57px);
+  }
+}
