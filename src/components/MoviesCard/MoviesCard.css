@@ -1,6 +1,10 @@
 .movies-card {
   list-style: none;
   min-width: 270px;
+  min-height: 229px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .movies-card__poster {

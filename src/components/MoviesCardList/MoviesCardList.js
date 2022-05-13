@@ -1,11 +1,15 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
+function MoviesCardList(props) {
   return (
     <section className="movies">
       <ul className="movies-list movies-list_type_saved">
-        <MoviesCard />
+
+        {props.movies.map((movie) =>( <MoviesCard
+        key={movie.id}
+        movie={movie} />))}
+
       </ul>
     </section>
   )

@@ -10,10 +10,30 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
-import Preloader from '../Preloader/Preloader'
+import Preloader from '../Preloader/Preloader';
+import apiMovies from '../../utils/MoviesApi'
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [movies, setMovies] =React.useState([]);
+
+  function handleRequest (data) {
+    apiMovies.getFoundMovies(data)
+    .then((foundMovies) => {
+      setIsLoading(true)
+      setMovies(foundMovies)
+      console.log(foundMovies)
+    })
+    .catch(err => { console.log(err) })
+    .finally(() => {
+      setIsLoading(false)
+    })
+  }
+
+  function handleFindMovies(e) {
+    e.preventDefault();
+    handleRequest();
+  }
 
   return (
     <div className="page">
@@ -41,7 +61,9 @@ function App() {
         </Route>
 
         <Route path="/movies">
-          <Movies />
+          <Movies
+          onFindMovies = {handleFindMovies}
+          movies= {movies} />
         </Route>
 
         <Route path="/saved-movies">

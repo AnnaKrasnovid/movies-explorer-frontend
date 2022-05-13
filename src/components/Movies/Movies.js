@@ -3,11 +3,12 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
-function Movies() {
+function Movies(props) {
   return (
     <main className="movies-page">
-      <SearchForm />
-      <MoviesCardList />
+      <SearchForm onFindMovies={props.onFindMovies} />
+      <MoviesCardList
+      movies={props.movies} />
       <ShowMoreButton />
     </main>
   )
