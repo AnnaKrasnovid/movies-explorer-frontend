@@ -20,9 +20,9 @@ function App() {
   function handleRequest (data) {
     apiMovies.getFoundMovies(data)
     .then((foundMovies) => {
-      setIsLoading(true)
-      setMovies(foundMovies)
-      console.log(foundMovies)
+        setIsLoading(true)
+        setMovies(foundMovies)
+        console.log(foundMovies)
     })
     .catch(err => { console.log(err) })
     .finally(() => {

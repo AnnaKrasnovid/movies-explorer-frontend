@@ -1,8 +1,18 @@
 import '../Register/Register.css';
 import Logo from '../Logo/Logo';
 import { Link } from 'react-router-dom';
+import useFormValidation from '../../hooks/useFormValidation';
 
 function Login() {
+  const { values,
+    handleChange,
+    errors,
+    isValid,
+    resetForm,
+    setValues,
+    setErrors,
+    setIsValid } = useFormValidation();
+
   return (
     <section className="entrance">
      <Logo />
@@ -20,8 +30,11 @@ function Login() {
               placeholder="E-mail"
               required
               minLength="3"
-              maxLength="40" />
-            <span id="email-input-error" className="form__error"></span>
+              maxLength="40"
+              value={values.email || ''}
+              onChange={handleChange}
+              />
+            <span id="email-input-error" className="form__error">{errors.email || ''}</span>
           </div>
 
           <div className="form__input-container">
@@ -32,13 +45,16 @@ function Login() {
               type="password"
               name="password"
               placeholder="Пароль"
-              required />
-            <span id="password-input-error" className="form__error"></span>
+              required
+              value={values.password || ''}
+              onChange={handleChange}
+              />
+            <span id="password-input-error" className="form__error">{errors.password || ''}</span>
           </div>
 
         </fieldset>
 
-        <button className="button button_type_form hover-button" type="submit">Войти</button>
+        <button className={`button button_type_form hover-button ${!isValid ? "button_disabled" : ""}`} type="submit" disabled={!isValid} >Войти</button>
         <div className="form__link-container">
           <p className="form__question">Ещё не зарегистрированы?</p>
           <Link to="signup" className="link link_type_entrance hover-link">Регистрация</Link>
