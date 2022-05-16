@@ -2,10 +2,11 @@ import React from 'react';
 import './SearchForm.css';
 //import useInput from '../../hooks/useInput';
 import useFormValidation from '../../hooks/useFormValidation';
-import { useEffect } from 'react';
+//import { useEffect } from 'react';
 
 function SearchForm(props) {
   const [isDirty, setIsDirty] = React.useState(false);
+
 
   const { values,
     handleChange,
@@ -21,11 +22,22 @@ function SearchForm(props) {
     setIsDirty(true)
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.onFindMovies(values.search)
+    //console.log(values.search)
+  }
+
+  /*function handleChangeCheckbox() {
+
+    props.onCheckbox()
+  }*/
+
   return (
     <section className="search">
       <span id="search-input-error" className={`search__error ${(!isValid && isDirty) ? 'search__error_active' : ''}`}>Нужно ввести ключевое слово</span>
       <div className="search__container">
-        <form className="search__box" onSubmit={props.onFindMovies} noValidate>
+        <form className="search__box" onSubmit={(e) =>handleSubmit(e)} noValidate>
           <div className="search__box-search">
             <div className="search__magnifier"></div>
             <input
@@ -45,8 +57,8 @@ function SearchForm(props) {
         </form>
         <div className="search__box-checkbox">
           <label className="search__checkbox">
-            <input className="search__checkbox-input" type="checkbox"></input>
-            <span className="search__checkbox-slider"></span>
+            <input className="search__checkbox-input" type="checkbox" onChange={props.onCheckbox} ></input>
+            <span className="search__checkbox-slider" ></span>
           </label>
           <p className="search__checked-title">Короткометражки</p>
         </div>

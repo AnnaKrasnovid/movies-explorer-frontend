@@ -11,75 +11,100 @@ import Register from '../Register/Register';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
-import apiMovies from '../../utils/MoviesApi'
+import apiMovies from '../../utils/MoviesApi';
+import { handleFoundMovies } from '../../utils/utils';
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [movies, setMovies] =React.useState([]);
+  const [foundMovies, setFoundMovies] = React.useState([]);
+  const [checkbox, setCheckbox] = React.useState(false);
 
-  function handleRequest (data) {
-    apiMovies.getFoundMovies(data)
-    .then((foundMovies) => {
-        setIsLoading(true)
-        setMovies(foundMovies)
-        console.log(foundMovies)
-    })
-    .catch(err => { console.log(err) })
-    .finally(() => {
-      setIsLoading(false)
-    })
+
+  function handleRequest(query) {
+    setIsLoading(true)
+    apiMovies.getFoundMovies(query)
+      .then((movies) => {
+        const filteredMovies = handleFoundMovies(query, movies, checkbox)
+        setFoundMovies(filteredMovies)
+      })
+      .catch(err => { console.log(err) })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
-  function handleFindMovies(e) {
-    e.preventDefault();
-    handleRequest();
+
+function handleCheckbox() {
+  if (checkbox === false) {
+    setCheckbox(true)
+
+    //console.log(checkbox)
+  } else {
+    setCheckbox(false)
+    //console.log(checkbox)
   }
+}
+
+
+
+
+  /*function duration(data) {
+    const time = arrOb.filter(data => {
+       if(data.duration < 60) {
+      return console.log('yes')
+    } else {
+      return console.log('no')
+    }
+    })
+   data.duration ? < 60
+  }*/
 
   return (
     <div className="page">
-      {isLoading ? (
-        <Preloader />) : (
 
-          <>
+
+        <>
           <Header />
-      <Switch>
+          <Switch>
 
-        <Route exact path="/">
-          <Main />
-        </Route>
+            <Route exact path="/">
+              <Main />
+            </Route>
 
-        <Route path="/signup">
-          <Register />
-        </Route>
+            <Route path="/signup">
+              <Register />
+            </Route>
 
-        <Route path="/signin">
-          <Login />
-        </Route>
+            <Route path="/signin">
+              <Login />
+            </Route>
 
-        <Route path="/profile">
-          <Profile />
-        </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
 
-        <Route path="/movies">
-          <Movies
-          onFindMovies = {handleFindMovies}
-          movies= {movies} />
-        </Route>
+            <Route path="/movies">
+              <Movies
+                onCheckbox={handleCheckbox}
 
-        <Route path="/saved-movies">
-          <SavedMovies />
-        </Route>
+                onFindMovies={handleRequest}
+                movies={foundMovies}
+                isLoading={isLoading}
+              />
+            </Route>
 
-        <Route path="*">
-          <PageNotFound />
-        </Route>
+            <Route path="/saved-movies">
+              <SavedMovies />
+            </Route>
 
-      </Switch>
+            <Route path="*">
+              <PageNotFound />
+            </Route>
 
-      <Footer />
-      </>
-        )
-    }
+          </Switch>
+
+          <Footer />
+        </>
 
 
     </div>

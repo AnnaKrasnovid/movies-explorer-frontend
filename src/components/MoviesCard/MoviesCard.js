@@ -1,12 +1,8 @@
 import './MoviesCard.css';
-//import Movie from '../../images/movie.jpg';
+import { handleDuration } from '../../utils/utils';
 
 function MoviesCard(props) {
-  function handleDuration(duration) {
-    const hours = Math.floor(duration / 60);
-    const minutes = duration - (60 * hours);
-    return `${hours}ч ${minutes}м`;
-  }
+
 
   return (
     <li className="movies-card" >
