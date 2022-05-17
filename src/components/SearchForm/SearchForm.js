@@ -6,7 +6,7 @@ import useFormValidation from '../../hooks/useFormValidation';
 
 function SearchForm(props) {
   const [isDirty, setIsDirty] = React.useState(false);
-
+  const [checkbox, setCheckbox] = React.useState(false);
 
   const { values,
     handleChange,
@@ -15,23 +15,25 @@ function SearchForm(props) {
     resetForm,
     setValues,
     setErrors,
-    setIsValid } = useFormValidation();
-
+    setIsValid
+  } = useFormValidation();
 
   function onBlur() {
     setIsDirty(true)
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    props.onFindMovies(values.search)
-    //console.log(values.search)
+  function handleCheckbox() {
+    if (checkbox === false) {
+      setCheckbox(true)
+    } else {
+      setCheckbox(false)
+    }
   }
 
-  /*function handleChangeCheckbox() {
-
-    props.onCheckbox()
-  }*/
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.onFindMovies(values.search, checkbox)
+  }
 
   return (
     <section className="search">
@@ -57,7 +59,7 @@ function SearchForm(props) {
         </form>
         <div className="search__box-checkbox">
           <label className="search__checkbox">
-            <input className="search__checkbox-input" type="checkbox" onChange={props.onCheckbox} ></input>
+            <input className="search__checkbox-input" type="checkbox" onChange={handleCheckbox} ></input>
             <span className="search__checkbox-slider" ></span>
           </label>
           <p className="search__checked-title">Короткометражки</p>

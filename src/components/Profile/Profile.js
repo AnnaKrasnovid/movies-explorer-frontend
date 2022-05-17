@@ -1,18 +1,43 @@
-import './Profile.css';
+
 import React from 'react';
+import './Profile.css';
 import { Link } from 'react-router-dom';
+import useFormValidation from '../../hooks/useFormValidation';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function Profile() {
   const [isEditing, setIsEditing] = React.useState(false);
+  const currentUser = React.useContext(CurrentUserContext);
 
   function handleEditProfile() {
     setIsEditing(true)
   }
 
+  const { values,
+    handleChange,
+    errors,
+    isValid,
+    resetForm,
+    setValues,
+    setErrors,
+    setIsValid } = useFormValidation();
+
+    function handleSubmit() {
+      console.log(currentUser)
+      console.log(currentUser.name)
+      //e.preventDefault();
+      /*props.handleUpdateUserInfo({
+          name: values.name,
+          email: values.email,
+      })*/
+
+  }
+
   return (
     <section className="profile">
-      <h2 className="profile__title">Привет, Виталий!</h2>
-      <fieldset className="profile__container">
+      <h2 className="profile__title">{`Привет, ${currentUser.name}!`}</h2>
+      <form className="profile__form" onSubmit={handleSubmit}>
+      <fieldset className="profile__container" >
         <div className="profile__box">
           <label className="profile__label" htmlFor="name-input">Имя</label>
           <input
@@ -23,7 +48,10 @@ function Profile() {
             placeholder="Имя"
             required
             minLength="3"
-            maxLength="40">
+            maxLength="40"
+            value={values.name || ''}
+            onChange={handleChange}>
+              {/*currentUser.name*/ }
           </input>
         </div>
 
@@ -35,11 +63,14 @@ function Profile() {
             type="email"
             name="email"
             placeholder="E-mail"
-            required>
+            required
+            value={values.email || ''}
+            onChange={handleChange}>
+              {/*currentUser.email*/}
           </input>
         </div>
       </fieldset>
-
+      </form>
       {!isEditing ? (
         <div className="profile__link-container">
         <button className="button link link_type_profile hover-link" onClick={handleEditProfile}>Редактировать</button>
@@ -48,7 +79,7 @@ function Profile() {
       ) : (
         <div className="profile__button-container">
         <span className="profile__error"></span>
-        <button className="button button_type_form hover-button" type="submit">Сохранить</button>
+        <button className="button button_type_form hover-button" type="submit" >Сохранить</button>
       </div>
       )}
     </section>

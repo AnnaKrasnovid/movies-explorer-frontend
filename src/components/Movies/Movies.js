@@ -14,16 +14,20 @@ function Movies(props) {
         onFindMovies={props.onFindMovies}
         onCheckbox={props.onCheckbox}
       />
-      {props.isLoading ? <Preloader /> : (
-        <>
-          <MoviesCardList
-            movies={props.movies} />
-          <ShowMoreButton />
-        </>
-      )}
+      {props.isLoading ? <Preloader /> :(
 
+
+        <>
+        <MoviesCardList movies={props.movies} />
+        {(props.movies.length > 4) ? <ShowMoreButton /> : ''}
+        </>
+
+
+
+      )}
     </main>
   )
 }
+
 
 export default Movies;

@@ -3,7 +3,7 @@ import Logo from '../Logo/Logo';
 import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
 
-function Register() {
+function Register(props) {
 const { values,
   handleChange,
   errors,
@@ -13,11 +13,20 @@ const { values,
   setErrors,
   setIsValid } = useFormValidation();
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.handleRegistration({
+        name: values.name,
+        email: values.email,
+        password: values.password
+    })
+}
+
   return (
     <section className="entrance">
       <Logo />
       <h2 className="entrance__title">Добро пожаловать!</h2>
-      <form className="form form_type_register" noValidate>
+      <form className="form form_type_register" onSubmit={handleSubmit} noValidate>
         <fieldset className="form__container">
           <div className="form__input-container">
             <label className="form__label" htmlFor="name-input">Имя</label>

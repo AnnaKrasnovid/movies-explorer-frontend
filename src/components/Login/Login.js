@@ -2,8 +2,9 @@ import '../Register/Register.css';
 import Logo from '../Logo/Logo';
 import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
+import React from 'react';
 
-function Login() {
+function Login(props) {
   const { values,
     handleChange,
     errors,
@@ -11,13 +12,28 @@ function Login() {
     resetForm,
     setValues,
     setErrors,
-    setIsValid } = useFormValidation();
+    setIsValid
+  } = useFormValidation();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if(!values.email || !values.password) {
+        return;
+    }
+    props.handleLogin({
+        password: values.password,
+        email: values.email,
+    });
+    setValues('')// проверить работу неправильного пароля и почты и очищение импута
+    setIsValid(false)
+}
+
 
   return (
     <section className="entrance">
      <Logo />
       <h2 className="entrance__title">Рады видеть!</h2>
-      <form className="form form_type_register">
+      <form className="form form_type_register" onSubmit={handleSubmit}>
         <fieldset className="form__container">
 
           <div className="form__input-container">

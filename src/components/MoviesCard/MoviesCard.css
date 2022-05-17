@@ -4,7 +4,6 @@
   min-height: 229px;
   display: flex;
   flex-direction: column;
-
 }
 
 .movies-card__poster {
@@ -65,9 +64,10 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .movies-card {
+  /*.movies-card {
     gap:30px;
-  }
+
+  }*/
 
   .movies-card__poster {
     height: 190px;

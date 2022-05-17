@@ -15,16 +15,21 @@
   font-weight: 500;
 }
 
-.profile__container {
+.profile__form {
   display: flex;
   flex-direction: column;
-  padding: 0;
-  border: 0;
+
   width: 100%;
   font-size: 11px;
   line-height: 13px;
   color: #fff;
   margin: 108px 0 206px;
+}
+
+.profile__container {
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .profile__box {
@@ -89,14 +94,12 @@
   margin-bottom: 20px;
 }
 
-
-
 @media screen and (max-width: 1023px) {
   .profile {
     padding-top: 212px;
   }
 
-  .profile__container {
+  .profile__form {
     margin-top: 80px;
     margin-bottom: 198px;
   }
@@ -108,7 +111,7 @@
     max-width: 260px;
   }
 
-  .profile__container {
+  .profile__form {
     margin-top: 67px;
     margin-bottom: 365px;
   }

@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -12,19 +12,24 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 import apiMovies from '../../utils/MoviesApi';
+import apiMain from '../../utils/MainApi';
 import { handleFoundMovies } from '../../utils/utils';
+import * as auth from '../../utils/auth';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [foundMovies, setFoundMovies] = React.useState([]);
-  const [checkbox, setCheckbox] = React.useState(false);
+  //const [isSuccessSignUp, setSuccessSignUp] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState({name: '', email: ''});
+  const history = useHistory();
 
-
-  function handleRequest(query) {
+  function handleRequest(query, stateCheckbox) {
     setIsLoading(true)
     apiMovies.getFoundMovies(query)
       .then((movies) => {
-        const filteredMovies = handleFoundMovies(query, movies, checkbox)
+        const filteredMovies = handleFoundMovies(query, movies, stateCheckbox)
         setFoundMovies(filteredMovies)
       })
       .catch(err => { console.log(err) })
@@ -33,51 +38,82 @@ function App() {
       })
   }
 
-
-function handleCheckbox() {
-  if (checkbox === false) {
-    setCheckbox(true)
-
-    //console.log(checkbox)
-  } else {
-    setCheckbox(false)
-    //console.log(checkbox)
+  function handleRegistration(data) {
+    auth.register(data)
+      .then((data) => {
+        console.log(data)
+        history.push("/signin")
+      })
+      .catch(err => {
+        //setSuccessSignUp(false)
+        console.log(err)
+      })
+    //.finally(() => )
   }
-}
+
+  function handleLogin(data) {
+    auth.authorize(data)
+      .then((res) => {
+        localStorage.setItem('token', res.token);
+        setLoggedIn(true);
+        console.log(currentUser)
+        history.push("/movies");
+      })
+      .catch(err => {
+        // setSuccessSignUp(false)
+        console.log(err)
+      })
+  }
+
+  React.useEffect(() => {
+    setIsLoading(true)
+
+    if(loggedIn) {
+      apiMain.getProfileInfo()
+      .then((data) => {
+        setLoggedIn(true)
+        setCurrentUser(data)
 
 
-
-
-  /*function duration(data) {
-    const time = arrOb.filter(data => {
-       if(data.duration < 60) {
-      return console.log('yes')
-    } else {
-      return console.log('no')
+        console.log(data)
+        console.log(data.name)
+        console.log(currentUser)
+      })
+      .catch(err => {
+        // setSuccessSignUp(false)
+        console.log(err)
+      })
+      .finally(() => setIsLoading(false))
     }
-    })
-   data.duration ? < 60
-  }*/
+
+  }, [loggedIn])
 
   return (
     <div className="page">
 
 
-        <>
-          <Header />
-          <Switch>
+      <>
+      <CurrentUserContext.Provider value={ currentUser }>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
 
-            <Route exact path="/">
-              <Main />
-            </Route>
+          <Route path="/signup">
+            <Register
+              handleRegistration={handleRegistration}
+            />
+          </Route>
 
-            <Route path="/signup">
-              <Register />
-            </Route>
+          <Route path="/signin">
+            <Login
+              handleLogin={handleLogin}
+            />
+          </Route>
 
-            <Route path="/signin">
-              <Login />
-            </Route>
+
+
 
             <Route path="/profile">
               <Profile />
@@ -85,8 +121,6 @@ function handleCheckbox() {
 
             <Route path="/movies">
               <Movies
-                onCheckbox={handleCheckbox}
-
                 onFindMovies={handleRequest}
                 movies={foundMovies}
                 isLoading={isLoading}
@@ -97,14 +131,16 @@ function handleCheckbox() {
               <SavedMovies />
             </Route>
 
-            <Route path="*">
-              <PageNotFound />
-            </Route>
 
-          </Switch>
+          <Route path="*">
+            <PageNotFound />
+          </Route>
 
-          <Footer />
-        </>
+        </Switch>
+
+        <Footer />
+        </ CurrentUserContext.Provider>
+      </>
 
 
     </div>
