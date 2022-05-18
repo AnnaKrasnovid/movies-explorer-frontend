@@ -16,16 +16,78 @@ import apiMain from '../../utils/MainApi';
 import { handleFoundMovies } from '../../utils/utils';
 import * as auth from '../../utils/auth';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [foundMovies, setFoundMovies] = React.useState([]);
-  //const [isSuccessSignUp, setSuccessSignUp] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({name: '', email: ''});
+  const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
+  const [isUserChecked, setIsUserChecked] = React.useState(false);
   const history = useHistory();
 
-  function handleRequest(query, stateCheckbox) {
+  React.useEffect(() => {
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
+      auth.checkToken(token)
+        .then((data) => {
+          setLoggedIn(true);
+          setIsUserChecked(true);
+          //console.log(loggedIn);
+        })
+        .catch((err) => {
+          setIsUserChecked(true);
+          //console.log(err)
+        })
+    }
+  }, [])
+
+  React.useEffect(() => {
+    //setIsLoading(true)
+    if (loggedIn) {
+      //const token = localStorage.getItem('token');
+      apiMain.getProfileInfo()
+        .then((data) => {
+          setCurrentUser({ name: data.name, email: data.email })
+          setLoggedIn(true)
+          //console.log(loggedIn)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      //.finally(() => setIsLoading(false))
+    }
+  }, [loggedIn])
+
+
+
+  function handleRegistration(data) {
+    auth.register(data)
+      .then((data) => {
+        history.push("/signin")
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    //.finally(() => )
+  }
+
+  function handleLogin(data) {
+    auth.authorize(data)
+      .then((res) => {
+        localStorage.setItem('token', res.token);
+        setLoggedIn(true);
+        //console.log(currentUser)
+        history.push("/movies");
+        console.log(loggedIn)
+      })
+      .catch(err => {
+
+        console.log(err)
+      })
+  }
+
+  function handleRequestSearch(query, stateCheckbox) {
     setIsLoading(true)
     apiMovies.getFoundMovies(query)
       .then((movies) => {
@@ -38,107 +100,74 @@ function App() {
       })
   }
 
-  function handleRegistration(data) {
-    auth.register(data)
-      .then((data) => {
-        console.log(data)
-        history.push("/signin")
-      })
-      .catch(err => {
-        //setSuccessSignUp(false)
-        console.log(err)
-      })
-    //.finally(() => )
+  function handleUpdateUserInfo(name, email) {
+    apiMain.updateProfileInfo(name, email)
+    .then((data) => {
+      setCurrentUser(data)
+    })
+    .catch(err => { console.log(err) })
+    /*.finally(() => {
+
+    })*/
   }
 
-  function handleLogin(data) {
-    auth.authorize(data)
-      .then((res) => {
-        localStorage.setItem('token', res.token);
-        setLoggedIn(true);
-        console.log(currentUser)
-        history.push("/movies");
-      })
-      .catch(err => {
-        // setSuccessSignUp(false)
-        console.log(err)
-      })
+
+  function logout() {
+    setLoggedIn(false);
+    localStorage.removeItem('token');
+    setCurrentUser({ name: '', email: '' });
+    //console.log(currentUser)
+    console.log(loggedIn)
   }
-
-  React.useEffect(() => {
-    setIsLoading(true)
-
-    if(loggedIn) {
-      apiMain.getProfileInfo()
-      .then((data) => {
-        setLoggedIn(true)
-        setCurrentUser(data)
-
-
-        console.log(data)
-        console.log(data.name)
-        console.log(currentUser)
-      })
-      .catch(err => {
-        // setSuccessSignUp(false)
-        console.log(err)
-      })
-      .finally(() => setIsLoading(false))
-    }
-
-  }, [loggedIn])
 
   return (
     <div className="page">
-
-
       <>
-      <CurrentUserContext.Provider value={ currentUser }>
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-
-          <Route path="/signup">
-            <Register
-              handleRegistration={handleRegistration}
-            />
-          </Route>
-
-          <Route path="/signin">
-            <Login
-              handleLogin={handleLogin}
-            />
-          </Route>
-
-
-
-
-            <Route path="/profile">
-              <Profile />
+        <CurrentUserContext.Provider value={currentUser}>
+          <Header />
+          <Switch>
+            <Route exact path="/">
+              <Main />
             </Route>
 
-            <Route path="/movies">
-              <Movies
-                onFindMovies={handleRequest}
-                movies={foundMovies}
-                isLoading={isLoading}
+            <Route path="/signup">
+              <Register
+                handleRegistration={handleRegistration}
               />
             </Route>
 
-            <Route path="/saved-movies">
-              <SavedMovies />
+            <Route path="/signin">
+              <Login
+                handleLogin={handleLogin}
+              />
+            </Route>
+            {isUserChecked ?
+              <ProtectedRoute path="/profile" loggedIn={loggedIn} >
+                <Profile logout={logout} onUpdateUserInfo={handleUpdateUserInfo} />
+              </ProtectedRoute> : null}
+            {isUserChecked ?
+              <ProtectedRoute path="/movies" loggedIn={loggedIn} >
+                <Movies
+                  onFindMovies={handleRequestSearch}
+                  movies={foundMovies}
+                /* isLoading={isLoading}*/
+                />
+              </ProtectedRoute> : null}
+            {isUserChecked ?
+              <ProtectedRoute path="/saved-movies" Component={SavedMovies} loggedIn={loggedIn} >
+                <SavedMovies />
+              </ProtectedRoute> : null}
+
+
+
+
+            <Route path="*">
+              <PageNotFound />
             </Route>
 
+          </Switch>
 
-          <Route path="*">
-            <PageNotFound />
-          </Route>
-
-        </Switch>
-
-        <Footer />
+          <Footer />
         </ CurrentUserContext.Provider>
       </>
 

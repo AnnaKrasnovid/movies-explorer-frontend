@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Profile() {
-  const [isEditing, setIsEditing] = React.useState(false);
+function Profile(props) {
+  //const [isEditing, setIsEditing] = React.useState(false);
   const currentUser = React.useContext(CurrentUserContext);
+  const [isInputActive, setIsInputActive] = React.useState(false);
+  const [isInputDataChanged, setIsInputDataChanged] = React.useState(false);
 
   function handleEditProfile() {
-    setIsEditing(true)
+    //setIsEditing(true)
+    setIsInputActive(true)
   }
 
   const { values,
@@ -22,66 +25,78 @@ function Profile() {
     setErrors,
     setIsValid } = useFormValidation();
 
-    function handleSubmit() {
-      console.log(currentUser)
-      console.log(currentUser.name)
-      //e.preventDefault();
-      /*props.handleUpdateUserInfo({
-          name: values.name,
-          email: values.email,
-      })*/
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.onUpdateUserInfo(
+      values.name,
+      values.email,
+    )
+  }
 
+  React.useEffect(() => {
+    if (currentUser) {
+      setValues({
+        name: currentUser.name,
+        email: currentUser.email
+      })
+    }
+  }, [currentUser, setValues])
+
+  function handleChangeUpdateUser(e) {
+    handleChange(e)
+    setIsInputDataChanged(true)
   }
 
   return (
     <section className="profile">
       <h2 className="profile__title">{`Привет, ${currentUser.name}!`}</h2>
       <form className="profile__form" onSubmit={handleSubmit}>
-      <fieldset className="profile__container" >
-        <div className="profile__box">
-          <label className="profile__label" htmlFor="name-input">Имя</label>
-          <input
-            id="name-input"
-            className="profile__input"
-            type="text"
-            name="name"
-            placeholder="Имя"
-            required
-            minLength="3"
-            maxLength="40"
-            value={values.name || ''}
-            onChange={handleChange}>
-              {/*currentUser.name*/ }
-          </input>
-        </div>
+        <fieldset className="profile__container" >
+          <div className="profile__box">
+            <label className="profile__label" htmlFor="name-input">Имя</label>
+            <input
+              id="name-input"
+              className="profile__input"
+              type="text"
+              name="name"
+              placeholder="Имя"
+              required
+              minLength="3"
+              maxLength="40"
+              value={values.name || ''}
+              onChange={handleChangeUpdateUser}
+              disabled={!isInputActive}>
+            </input>
+          </div>
 
-        <div className="profile__box">
-          <label className="profile__label" htmlFor="email-input">E-mail</label>
-          <input
-            id="email-input"
-            className="profile__input"
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            required
-            value={values.email || ''}
-            onChange={handleChange}>
-              {/*currentUser.email*/}
-          </input>
-        </div>
-      </fieldset>
-      </form>
-      {!isEditing ? (
+          <div className="profile__box">
+            <label className="profile__label" htmlFor="email-input">E-mail</label>
+            <input
+              id="email-input"
+              className="profile__input"
+              type="email"
+              name="email"
+              placeholder="E-mail"
+              required
+              value={values.email || ''}
+              onChange={handleChangeUpdateUser}
+              disabled={!isInputActive}>
+            </input>
+          </div>
+        </fieldset>
+        {!isInputDataChanged ? (
         <div className="profile__link-container">
-        <button className="button link link_type_profile hover-link" onClick={handleEditProfile}>Редактировать</button>
-        <Link to="/" className="link link_type_logout hover-link">Выйти из аккаунта</Link>
-      </div>
+          <button className="button link link_type_profile hover-link" type="button" onClick={handleEditProfile}>Редактировать</button>
+          <Link to="/" className="link link_type_logout hover-link" onClick={props.logout}>Выйти из аккаунта</Link>
+        </div>
       ) : (
         <div className="profile__button-container">
-        <span className="profile__error"></span>
-        <button className="button button_type_form hover-button" type="submit" >Сохранить</button>
-      </div>
+          <span className="profile__error"></span>
+          <button className="button button_type_form hover-button" type="submit" >Сохранить</button>
+        </div>
       )}
+      </form>
+
     </section>
   )
 }

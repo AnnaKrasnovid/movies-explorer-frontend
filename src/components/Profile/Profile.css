@@ -23,13 +23,13 @@
   font-size: 11px;
   line-height: 13px;
   color: #fff;
-  margin: 108px 0 206px;
+  margin: 108px 0 0;
 }
 
 .profile__container {
   border: 0;
   padding: 0;
-  margin: 0;
+  margin: 0 0 206px 0;
 }
 
 .profile__box {
@@ -101,6 +101,9 @@
 
   .profile__form {
     margin-top: 80px;
+  }
+
+  .profile__container {
     margin-bottom: 198px;
   }
 }
@@ -113,7 +116,6 @@
 
   .profile__form {
     margin-top: 67px;
-    margin-bottom: 365px;
   }
 
   .link_type_profile {
@@ -124,5 +126,9 @@
   .link_type_logout {
     font-size: 12px;
     line-height: 15px;
+  }
+
+  .profile__container {
+    margin-bottom: 365px;
   }
 }

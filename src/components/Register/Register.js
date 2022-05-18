@@ -70,6 +70,7 @@ const { values,
               type="password"
               name="password"
               placeholder="Пароль"
+              autoComplete="on"
               required
               value={values.password || ''}
               onChange={handleChange}/>

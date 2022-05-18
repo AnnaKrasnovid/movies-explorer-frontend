@@ -11,26 +11,42 @@ class MainApi {
     .then(this._responseStatus)
   }*/
 
+  /*getProfileInfo(token) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      }
+    })
+    .then(this._checkResponseStatus)
+  }*/
+
   getProfileInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
+      headers: {
+        authorization: this._getToken(),
+        'Content-Type': 'application/json',
+       }
     })
-    .then(this._responseStatus)
+    .then(this._checkResponseStatus)
   }
 
-  /*setProfileInfo(data) {
+  updateProfileInfo(name, email) {
     return fetch (`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        authorization: this._getToken(),
+        'Content-Type': 'application/json',
+       },
       body: JSON.stringify({
-        name: data.name,
-        about: data.about
+        name,
+        email
       })
     })
-    .then(this._responseStatus)
+    .then(this._checkResponseStatus)
   }
 
-  setNewCard(data) {
+  /*setNewCard(data) {
     return fetch (`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -76,8 +92,11 @@ class MainApi {
     })
     .then(this._responseStatus)
   }*/
+  _getToken() {
+    return `Bearer ${localStorage.getItem('token')}`
+  }
 
-  _responseStatus(res) {
+  _checkResponseStatus(res) {
     if (res.ok) {
       return res.json();
     }
@@ -87,10 +106,10 @@ class MainApi {
 
 const apiMain = new MainApi({
   baseUrl: 'https://api.movies.krasnovid.nomoredomains.work',
-  headers: {
-    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+ /* headers: {
+   //'Authorization': `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json',
-  }
-})
+  }*/
+});
 
 export default apiMain;

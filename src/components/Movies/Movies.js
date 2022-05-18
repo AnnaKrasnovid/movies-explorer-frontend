@@ -6,25 +6,12 @@ import Preloader from '../Preloader/Preloader';
 
 
 function Movies(props) {
-
-
   return (
     <main className="movies-page">
       <SearchForm
-        onFindMovies={props.onFindMovies}
-        onCheckbox={props.onCheckbox}
-      />
-      {props.isLoading ? <Preloader /> :(
-
-
-        <>
+        onFindMovies={props.onFindMovies}/>
         <MoviesCardList movies={props.movies} />
-        {(props.movies.length > 4) ? <ShowMoreButton /> : ''}
-        </>
-
-
-
-      )}
+        <ShowMoreButton />
     </main>
   )
 }
