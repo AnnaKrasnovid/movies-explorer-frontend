@@ -4,23 +4,6 @@ class MainApi {
     this._headers = headers;
   }
 
-  /*getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
-    })
-    .then(this._responseStatus)
-  }*/
-
-  /*getProfileInfo(token) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`,
-      }
-    })
-    .then(this._checkResponseStatus)
-  }*/
-
   getProfileInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
@@ -46,37 +29,29 @@ class MainApi {
     .then(this._checkResponseStatus)
   }
 
-  /*setNewCard(data) {
-    return fetch (`${this._baseUrl}/cards`, {
+  getSavedMoviesList() {
+    return fetch(`${this._baseUrl}/movies`, {
+      headers: {
+        authorization: this._getToken(),
+        'Content-Type': 'application/json',
+       }
+    })
+    .then(this._checkResponseStatus)
+  }
+
+  addMovieToSaved(movie) {
+    return fetch (`${this._baseUrl}/movies`, {
       method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({
-        name: data.title,
-        link: data.link
-      })
+      headers: {
+        authorization: this._getToken(),
+        'Content-Type': 'application/json',
+       },
+      body: JSON.stringify(movie)
     })
-    .then(this._responseStatus)
+    .then(this._checkResponseStatus)
   }
 
-  setUserAvatar(data) {
-    return fetch (`${this._baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: data.avatar
-      })
-    })
-    .then(this._responseStatus)
-  }
-
-  putLike(data) {
-    return fetch (`${this._baseUrl}/cards/${data._id}/likes`, {
-      method: 'PUT',
-      headers: this._headers,
-    })
-    .then(this._responseStatus)
-  }
-
+  /*
   deleteLike(data) {
     return fetch (`${this._baseUrl}/cards/${data._id}/likes`, {
       method: 'DELETE',
@@ -92,6 +67,7 @@ class MainApi {
     })
     .then(this._responseStatus)
   }*/
+
   _getToken() {
     return `Bearer ${localStorage.getItem('token')}`
   }

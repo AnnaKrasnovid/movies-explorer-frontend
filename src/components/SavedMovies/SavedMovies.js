@@ -5,8 +5,13 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function SavedMovies(props) {
   return (
     <main className="movies-page">
-      <SearchForm onFindMovies={props.onFindMovies}/>
-     {/*<MoviesCardList movies={props.movies}/>*/}
+      <SearchForm onFindMovies={props.onFindMovies} />
+      <MoviesCardList
+        movies={props.movies}
+        savedMovies={props.savedMovies}
+        foundMoviesInSavedMovies={props.foundMoviesInSavedMovies}
+        onMovieSearch={props.onMovieSearch}
+      />
     </main>
   )
 }

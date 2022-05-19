@@ -10,7 +10,7 @@ function Movies(props) {
     <main className="movies-page">
       <SearchForm
         onFindMovies={props.onFindMovies}/>
-        <MoviesCardList movies={props.movies} />
+        <MoviesCardList movies={props.movies} onSaveMovie={props.onSaveMovie} />
         <ShowMoreButton />
     </main>
   )
