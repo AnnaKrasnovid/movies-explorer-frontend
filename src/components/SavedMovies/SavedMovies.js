@@ -7,10 +7,12 @@ function SavedMovies(props) {
     <main className="movies-page">
       <SearchForm onFindMovies={props.onFindMovies} />
       <MoviesCardList
-        movies={props.movies}
-        savedMovies={props.savedMovies}
+        movies={props.movies} // сохраненные фильмы
+       savedMovies={props.savedMovies}
         foundMoviesInSavedMovies={props.foundMoviesInSavedMovies}
         onMovieSearch={props.onMovieSearch}
+        onDeleteMovie={props.onDeleteMovie}
+        isLikeMovies={props.isLikeMovies}
       />
     </main>
   )

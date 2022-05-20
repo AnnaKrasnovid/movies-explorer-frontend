@@ -26,6 +26,19 @@ export function handleDuration(duration) {
   return `${hours}ч ${minutes}м`;
 }
 
+export function sortingArrayId (savedMovies, movie) {
+  /*const arrMoviesId = []
+  props.savedMovies.map(item => arrMoviesId.push(item.movieId))
+  const stringIdMovies = String(arrMoviesId)
+  const like = stringIdMovies.includes(movie.id)
+  return like*/
+  const arrMoviesId = [];
+  savedMovies.map(item => arrMoviesId.push(item.movieId));
+  const stringIdMovies = String(arrMoviesId);
+  const like = stringIdMovies.includes(movie.id);
+  return like;
+}
+
 
 /* function handleSearch(query, movies) {
   const moviesFilter = movies.filter(item => {

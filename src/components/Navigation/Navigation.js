@@ -21,8 +21,8 @@ function Navigation() {
       {!(location.pathname === '/') ?
         (<>
           <button className="button button-burger" onClick={handleMenuOpen}></button>
-          <nav className={`navigation__container-menu ${isMenuOpen ? "navigation__container-menu_opened" : ""}`}>
-            <ul className="navigation__container navigation__container_type_logged-in">
+          <nav className={`navigation__container-menu ${isMenuOpen ? "navigation__container-menu_opened" : ""}` } onClick={handleMenuClose}>
+            <ul className="navigation__container navigation__container_type_logged-in" onClick={e=> {e.stopPropagation()}}>
               <div className="navigation__box">
                 <li>
                   <NavLink exact to="/" className="link link_type_logged-in hover-link" onClick={handleMenuClose}>Главная</NavLink>

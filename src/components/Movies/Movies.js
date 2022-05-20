@@ -8,10 +8,15 @@ import Preloader from '../Preloader/Preloader';
 function Movies(props) {
   return (
     <main className="movies-page">
-      <SearchForm
-        onFindMovies={props.onFindMovies}/>
-        <MoviesCardList movies={props.movies} onSaveMovie={props.onSaveMovie} />
-        <ShowMoreButton />
+      <SearchForm onFindMovies={props.onFindMovies} />
+      <MoviesCardList
+        movies={props.movies} //найденные фильмы
+        onSaveMovie={props.onSaveMovie}
+        onDeleteMovie={props.onDeleteMovie}
+        isLikeMovies={props.isLikeMovies}
+        savedMovies={props.savedMovies}
+        />
+      <ShowMoreButton />
     </main>
   )
 }

@@ -23,6 +23,7 @@ function App() {
   const [allMovies, setAllMovies] = React.useState([]); //  все фильмы с сервера bestMovies
   const [foundMovies, setFoundMovies] = React.useState([]); // найденные фильмы
   const [savedMovies, setSavedMovies] = React.useState([]); //сохраненные фильмы
+  const [isLikeMovies, setIsLikeMovies] = React.useState([]);
   const [foundMoviesInSavedMovies, setFoundMoviesInSavedMovies] = React.useState([]); //найденные фильмы в сохраненном
   const [isMovieSearch, setIsMovieSearch] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false); // вошедший в систему
@@ -73,7 +74,7 @@ function App() {
         .then((savedMovies) => {
           const savedMoviesCurrentUser = savedMovies.filter(movei => movei.owner === currentUser._id)
           setSavedMovies(savedMoviesCurrentUser)
-          console.log(savedMoviesCurrentUser)
+         // console.log(savedMoviesCurrentUser)
         })
         .catch(err => {
           console.log(err)
@@ -102,7 +103,7 @@ function App() {
         setLoggedIn(true);
         //console.log(currentUser)
         history.push("/movies");
-        console.log(loggedIn)
+       // console.log(loggedIn)
       })
       .catch(err => {
 
@@ -116,14 +117,31 @@ function App() {
       .then((movies) => {
         setAllMovies(movies)
         console.log(movies)
+        //console.log(movies)
         const filteredMovies = handleFoundMovies(query, movies, stateCheckbox)
         setFoundMovies(filteredMovies)
         console.log(filteredMovies)
+
+       /* const likedMovies = allMovies.map(data => {
+          const likeMoviesId = []
+          const likesavedMovies = savedMovies.map(item=> likeMoviesId.push(item.movieId))
+          const arrayIdMovies =String(likeMoviesId)
+          const mov = arrayIdMovies.includes(data.id)
+          return mov
+        })
+        console.log(likedMovies)
+        setIsLikeMovies(likedMovies)
+
+        console.log(likedMovies)*/
       })
       .catch(err => { console.log(err) })
       .finally(() => {
         setIsLoading(false)
       })
+  }
+
+  function savedMoviesId() {
+
   }
 
   function handleSearchSavedMovies(query, stateCheckbox) {
@@ -171,6 +189,20 @@ console.log(filteredMovies)
     })*/
   }
 
+  function handleDeleteSavedMovie(movie) {
+    console.log(movie)
+    apiMain.deleteMovieLike(movie)
+    .then(() => {
+      setSavedMovies(cards => cards.filter((c) => (c._id !== movie._id)))
+      //console.log(savedMovies)
+      //console.log(foundMovies)
+    })
+    .catch(err => { console.log(err) })
+  /*.finally(() => {
+
+  })*/
+  }
+
 
   function logout() {
     setLoggedIn(false);
@@ -211,6 +243,9 @@ console.log(filteredMovies)
                   onFindMovies={handleSearchMovies}
                   movies={foundMovies}
                   onSaveMovie={handleAddMovieToSaved}
+                  onDeleteMovie={handleDeleteSavedMovie}
+                  savedMovies={savedMovies}
+                 // isLikeMovies={isLikeMovies}
                 /* isLoading={isLoading}*/
                 />
               </ProtectedRoute> : null}
@@ -220,7 +255,10 @@ console.log(filteredMovies)
                   movies={savedMovies}
                   foundMoviesInSavedMovies={foundMoviesInSavedMovies}
                   onMovieSearch={isMovieSearch}
-                  /*savedMovies={savedMovies}*//>
+                  onDeleteMovie={handleDeleteSavedMovie}
+                  savedMovies={savedMovies}
+                  //isLikeMovies={isLikeMovies}
+                />
               </ProtectedRoute> : null}
 
 

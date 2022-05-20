@@ -51,16 +51,19 @@ class MainApi {
     .then(this._checkResponseStatus)
   }
 
-  /*
-  deleteLike(data) {
-    return fetch (`${this._baseUrl}/cards/${data._id}/likes`, {
+
+  deleteMovieLike(data) {
+    return fetch (`${this._baseUrl}/movies/${data._id}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        authorization: this._getToken(),
+        'Content-Type': 'application/json',
+       },
     })
     .then(this._responseStatus)
   }
 
-  removeCard(data) {
+  /*removeCard(data) {
     return fetch (`${this._baseUrl}/cards/${data._id}`, {
       method: 'DELETE',
       headers: this._headers

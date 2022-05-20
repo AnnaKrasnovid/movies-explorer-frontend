@@ -60,7 +60,7 @@ function SearchForm(props) {
         <div className="search__box-checkbox">
           <label className="search__checkbox">
             <input className="search__checkbox-input" type="checkbox" onChange={handleCheckbox} ></input>
-            <span className="search__checkbox-slider" ></span>
+            <span className="search__checkbox-slider"></span>
           </label>
           <p className="search__checked-title">Короткометражки</p>
         </div>
