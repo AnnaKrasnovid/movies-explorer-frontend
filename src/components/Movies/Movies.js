@@ -10,11 +10,13 @@ function Movies(props) {
     <main className="movies-page">
       <SearchForm onFindMovies={props.onFindMovies} />
       <MoviesCardList
+        allMovies={props.allMovies}
         movies={props.movies} //найденные фильмы
         onSaveMovie={props.onSaveMovie}
         onDeleteMovie={props.onDeleteMovie}
         isLikeMovies={props.isLikeMovies}
         savedMovies={props.savedMovies}
+        isError={props.isError}
         />
       <ShowMoreButton />
     </main>

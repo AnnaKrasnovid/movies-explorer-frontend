@@ -26,16 +26,12 @@ export function handleDuration(duration) {
   return `${hours}ч ${minutes}м`;
 }
 
-export function sortingArrayId (savedMovies, movie) {
-  /*const arrMoviesId = []
-  props.savedMovies.map(item => arrMoviesId.push(item.movieId))
-  const stringIdMovies = String(arrMoviesId)
-  const like = stringIdMovies.includes(movie.id)
-  return like*/
+export function sortingArrayId (listMovies, movie) {
   const arrMoviesId = [];
-  savedMovies.map(item => arrMoviesId.push(item.movieId));
+  listMovies.map(item => arrMoviesId.push(item.movieId));
   const stringIdMovies = String(arrMoviesId);
   const like = stringIdMovies.includes(movie.id);
+  //console.log(like)
   return like;
 }
 

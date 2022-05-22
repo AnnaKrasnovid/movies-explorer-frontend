@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -23,14 +23,26 @@ function App() {
   const [allMovies, setAllMovies] = React.useState([]); //  все фильмы с сервера bestMovies
   const [foundMovies, setFoundMovies] = React.useState([]); // найденные фильмы
   const [savedMovies, setSavedMovies] = React.useState([]); //сохраненные фильмы
-  const [isLikeMovies, setIsLikeMovies] = React.useState([]);
+
   const [foundMoviesInSavedMovies, setFoundMoviesInSavedMovies] = React.useState([]); //найденные фильмы в сохраненном
   const [isMovieSearch, setIsMovieSearch] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false); // вошедший в систему
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
   const [isUserChecked, setIsUserChecked] = React.useState(false); //проверка наличия пользователя, если есть то переходит в защщищенные роуты
+  const [query, setQuery] = React.useState('');
+  const [isChecked, setIsChecked] = React.useState(false);
+  //const [isLiked, setIsLiked] = React.useState(false);//
+  const [isError, setIsError] = React.useState(false);
+
 
   const history = useHistory();
+  const location = useLocation();
+
+ /* React.useEffect(() => {
+    if(location.pathname === '/movies' || location.pathname === '/saved-movies') {
+
+    }
+  })*/
 
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -40,10 +52,11 @@ function App() {
           setLoggedIn(true);
           setIsUserChecked(true);
           //console.log(loggedIn);
+
         })
         .catch((err) => {
           setIsUserChecked(true);
-          //console.log(err)
+          console.log(err)
         })
     }
   }, [])
@@ -51,14 +64,11 @@ function App() {
   React.useEffect(() => {
     //setIsLoading(true)
     if (loggedIn) {
-      //const token = localStorage.getItem('token');
       apiMain.getProfileInfo()
         .then((data) => {
-          setCurrentUser(data/*{ name: data.name, email: data.email }*/)
+          setCurrentUser(data)
           setLoggedIn(true)
-         /* console.log(data)
-          console.log(currentUser._id)
-          console.log(currentUser)*/
+
         })
         .catch(err => {
           console.log(err)
@@ -74,16 +84,16 @@ function App() {
         .then((savedMovies) => {
           const savedMoviesCurrentUser = savedMovies.filter(movei => movei.owner === currentUser._id)
           setSavedMovies(savedMoviesCurrentUser)
-         // console.log(savedMoviesCurrentUser)
+          // console.log(savedMoviesCurrentUser)
+          setIsError(false)
         })
         .catch(err => {
           console.log(err)
+          setIsError(true)
         })
       //.finally(() => setIsLoading(false))
     }
   }, [loggedIn, currentUser])
-
-
 
   function handleRegistration(data) {
     auth.register(data)
@@ -103,7 +113,7 @@ function App() {
         setLoggedIn(true);
         //console.log(currentUser)
         history.push("/movies");
-       // console.log(loggedIn)
+        // console.log(loggedIn)
       })
       .catch(err => {
 
@@ -116,51 +126,46 @@ function App() {
     apiMovies.getFoundMovies(query)
       .then((movies) => {
         setAllMovies(movies)
-        console.log(movies)
         //console.log(movies)
-        const filteredMovies = handleFoundMovies(query, movies, stateCheckbox)
-        setFoundMovies(filteredMovies)
-        console.log(filteredMovies)
-
-       /* const likedMovies = allMovies.map(data => {
-          const likeMoviesId = []
-          const likesavedMovies = savedMovies.map(item=> likeMoviesId.push(item.movieId))
-          const arrayIdMovies =String(likeMoviesId)
-          const mov = arrayIdMovies.includes(data.id)
-          return mov
-        })
-        console.log(likedMovies)
-        setIsLikeMovies(likedMovies)
-
-        console.log(likedMovies)*/
+        /*const filteredMovies = handleFoundMovies(query, movies, stateCheckbox)
+        setFoundMovies(filteredMovies)*/
+        //console.log(filteredMovies)
+        setQuery(query)
+        setIsChecked(stateCheckbox)
+        //handleFoundMovies(query, movies, stateCheckbox)
+        //localStorage.setItem('foundMovies', JSON.stringify(foundMovies))
+        setIsError(false)
       })
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        setIsError(true)
+        console.log(err)
+      })
       .finally(() => {
         setIsLoading(false)
       })
   }
 
-  function savedMoviesId() {
+  React.useEffect(() => {
+    const filteredMovies = handleFoundMovies(query, allMovies, isChecked)
+    setFoundMovies(filteredMovies)
+  },[query, isChecked, savedMovies])
 
-  }
+
 
   function handleSearchSavedMovies(query, stateCheckbox) {
-   /* const filteredMovies = handleFoundMovies(query, savedMovies, stateCheckbox)
-    setFoundMoviesInSavedMovies(filteredMovies)
-    console.log(filteredMovies)*/
     apiMain.getSavedMoviesList()
-    .then((savedMovies) => {
-      setIsMovieSearch(true)
-      const filteredMovies = handleFoundMovies(query, savedMovies, stateCheckbox)
-      setFoundMoviesInSavedMovies(filteredMovies)
-console.log(filteredMovies)
-
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then((savedMovies) => {
+        setIsMovieSearch(true)
+        const filteredMovies = handleFoundMovies(query, savedMovies, stateCheckbox)
+        setFoundMoviesInSavedMovies(filteredMovies)
+        console.log(filteredMovies)
+        setIsError(false)
+      })
+      .catch(err => {
+        console.log(err)
+        setIsError(true)
+      })
   }
-
 
 
   function handleUpdateUserInfo(name, email) {
@@ -169,40 +174,42 @@ console.log(filteredMovies)
         setCurrentUser(data)
       })
       .catch(err => { console.log(err) })
-    /*.finally(() => {
+    //.finally(() => {})
+  }
 
-    })*/
+
+  function sortingArrayId (movie) {
+    const arrMoviesId = [];
+    savedMovies.map(item => arrMoviesId.push(item.movieId));
+    const stringIdMovies = String(arrMoviesId);
+    const like = stringIdMovies.includes(movie.id);
+    //console.log(like)
+    return like;
   }
 
   function handleAddMovieToSaved(newMovie) {
     apiMain.addMovieToSaved(newMovie)
       .then((newMovie) => {
-        //setCurrentUser(data)
         setSavedMovies([newMovie, ...savedMovies])
-        console.log(newMovie)
-        console.log(savedMovies)
-        console.log(foundMovies)
+        setIsError(false)
       })
-      .catch(err => { console.log(err) })
-    /*.finally(() => {
-
-    })*/
+      .catch(err => {
+        setIsError(true)
+        console.log(err)
+      })
+    //.finally(() => {})
   }
 
   function handleDeleteSavedMovie(movie) {
-    console.log(movie)
     apiMain.deleteMovieLike(movie)
-    .then(() => {
-      setSavedMovies(cards => cards.filter((c) => (c._id !== movie._id)))
-      //console.log(savedMovies)
-      //console.log(foundMovies)
-    })
-    .catch(err => { console.log(err) })
-  /*.finally(() => {
-
-  })*/
+      .then((movie) => {
+        setSavedMovies((cards) => cards.filter((m) => (m._id !== movie._id)))
+       // setIsLiked(false)
+        console.log(movie._id)
+      })
+      .catch(err => { console.log(err) })
+    //.finally(() => {})
   }
-
 
   function logout() {
     setLoggedIn(false);
@@ -241,29 +248,28 @@ console.log(filteredMovies)
               <ProtectedRoute path="/movies" loggedIn={loggedIn} >
                 <Movies
                   onFindMovies={handleSearchMovies}
+                  allMovies={allMovies}
                   movies={foundMovies}
                   onSaveMovie={handleAddMovieToSaved}
                   onDeleteMovie={handleDeleteSavedMovie}
                   savedMovies={savedMovies}
-                 // isLikeMovies={isLikeMovies}
-                /* isLoading={isLoading}*/
+                  //onLiked={isLiked}
+                  isError={isError}
                 />
               </ProtectedRoute> : null}
             {isUserChecked ?
               <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} >
-                <SavedMovies onFindMovies={handleSearchSavedMovies}
+                <SavedMovies
+                  onFindMovies={handleSearchSavedMovies}
+                  allMovies={allMovies}
                   movies={savedMovies}
                   foundMoviesInSavedMovies={foundMoviesInSavedMovies}
                   onMovieSearch={isMovieSearch}
                   onDeleteMovie={handleDeleteSavedMovie}
-                  savedMovies={savedMovies}
-                  //isLikeMovies={isLikeMovies}
+                  isError={isError}
+                //savedMovies={savedMovies}
                 />
               </ProtectedRoute> : null}
-
-
-
-
             <Route path="*">
               <PageNotFound />
             </Route>
