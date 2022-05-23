@@ -5,8 +5,9 @@ import useFormValidation from '../../hooks/useFormValidation';
 //import { useEffect } from 'react';
 
 function SearchForm(props) {
-  const [isDirty, setIsDirty] = React.useState(false);
+  //const [isDirty, setIsDirty] = React.useState(false);
   const [checkbox, setCheckbox] = React.useState(false);
+  const [isEmptyRequest, setIsEmptyRequest] = React.useState(false);
 
   const { values,
     handleChange,
@@ -18,9 +19,9 @@ function SearchForm(props) {
     setIsValid
   } = useFormValidation();
 
-  function onBlur() {
+ /* function onBlur() {
     setIsDirty(true)
-  }
+  }*/
 
   function handleCheckbox() {
     if (checkbox === false) {
@@ -32,12 +33,22 @@ function SearchForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if(isValid) {
+      setIsEmptyRequest(true)
+       //console.log(isEmptyRequest)
+    } else {
+      setIsEmptyRequest(true)
+      //console.log(isEmptyRequest)
+      return
+     }
+
     props.onFindMovies(values.search, checkbox)
   }
 
   return (
     <section className="search">
-      <span id="search-input-error" className={`search__error ${(!isValid && isDirty) ? 'search__error_active' : ''}`}>Нужно ввести ключевое слово</span>
+      <span id="search-input-error" className={`search__error ${( isEmptyRequest && !isValid /*&& isDirty*/) ? 'search__error_active' : ''}`}>Нужно ввести ключевое слово</span>
       <div className="search__container">
         <form className="search__box" onSubmit={(e) =>handleSubmit(e)} noValidate>
           <div className="search__box-search">
@@ -52,10 +63,10 @@ function SearchForm(props) {
 
               value={values.search || ''}
               onChange={handleChange}
-              onBlur={onBlur}
+              //onBlur={onBlur}
             />
           </div>
-          <button className="search__button hover-button" type="submit" disabled={!isValid}></button>
+          <button className="search__button hover-button" type="submit" /*disabled={!isValid}*/></button>
         </form>
         <div className="search__box-checkbox">
           <label className="search__checkbox">

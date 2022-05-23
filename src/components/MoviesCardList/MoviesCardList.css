@@ -17,7 +17,6 @@ text-align: center;
   color: #EE3465;
 }
 
-
 .movies-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, 270px);

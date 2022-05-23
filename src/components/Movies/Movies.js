@@ -1,7 +1,6 @@
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 import Preloader from '../Preloader/Preloader';
 
 
@@ -9,16 +8,19 @@ function Movies(props) {
   return (
     <main className="movies-page">
       <SearchForm onFindMovies={props.onFindMovies} />
-      <MoviesCardList
-        allMovies={props.allMovies}
-        movies={props.movies} //найденные фильмы
-        onSaveMovie={props.onSaveMovie}
-        onDeleteMovie={props.onDeleteMovie}
-        isLikeMovies={props.isLikeMovies}
-        savedMovies={props.savedMovies}
-        isError={props.isError}
+      {props.isLoading ? <Preloader /> : (
+        <MoviesCardList
+          allMovies={props.allMovies}
+          movies={props.movies} //найденные фильмы
+          onSaveMovie={props.onSaveMovie}
+          onDeleteMovie={props.onDeleteMovie}
+          isLikeMovies={props.isLikeMovies}
+          savedMovies={props.savedMovies}
+          isError={props.isError}
+          isNothingFound={props.isNothingFound}
         />
-      <ShowMoreButton />
+      )}
+
     </main>
   )
 }
