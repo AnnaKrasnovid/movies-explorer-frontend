@@ -66,6 +66,7 @@ function MoviesCardList(props) {
     props.savedMovies.map(item => arraySavedMovieId.push(item.movieId));
     const stringSavedMovieId = String(arraySavedMovieId);
     const like = stringSavedMovieId.includes(movie.id);
+    console.log(movie.id)
     return like;
   }
 
@@ -81,8 +82,6 @@ function MoviesCardList(props) {
           onSaveMovie={props.onSaveMovie}
           onDeleteMovie={props.onDeleteMovie}
           isLikeMovies={like}
-
-        // onLiked={props.onLiked}
         />
       )
     })
@@ -97,8 +96,6 @@ function MoviesCardList(props) {
           savedMovies={props.savedMovies}
           onDeleteMovie={props.onDeleteMovie}
           isLikeMovies={true}
-
-        // onLiked={props.onLiked}
         />
       ))
     )

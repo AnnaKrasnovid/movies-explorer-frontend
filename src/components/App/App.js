@@ -38,6 +38,8 @@ function App() {
   const location = useLocation();
   const locationMovies = location.pathname === '/movies';
 
+  const [isDelete, setIsDelete] = React.useState(false);
+
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       const token = localStorage.getItem('token');
@@ -79,7 +81,11 @@ function App() {
           setIsError(true);
         })
     }
-  }, [loggedIn, currentUser])
+  }, [loggedIn, currentUser, isDelete])
+
+  React.useEffect(() => {
+
+  })
 
   React.useEffect(() => {
     if (JSON.parse(localStorage.getItem('movies')) && locationMovies) {
@@ -164,7 +170,6 @@ function App() {
       })
   }
 
-
   function handleUpdateUserInfo(name, email) {
     apiMain.updateProfileInfo(name, email)
       .then((data) => {
@@ -174,21 +179,14 @@ function App() {
     //.finally(() => {})
   }
 
-
-  function sortingArrayId(movie) {
-    const arrMoviesId = [];
-    savedMovies.map(item => arrMoviesId.push(item.movieId));
-    const stringIdMovies = String(arrMoviesId);
-    const like = stringIdMovies.includes(movie.id);
-    //console.log(like)
-    return like;
-  }
-
   function handleAddMovieToSaved(newMovie) {
     apiMain.addMovieToSaved(newMovie)
       .then((newMovie) => {
         setSavedMovies([newMovie, ...savedMovies])
         setIsError(false)
+        console.log(newMovie._id);
+        console.log(newMovie.movieId);
+        console.log(newMovie.owner);
       })
       .catch(err => {
         setIsError(true)
@@ -198,6 +196,7 @@ function App() {
   }
 
   function handleDeleteSavedMovie(movie) {
+    setIsDelete(true)
     apiMain.deleteMovieLike(movie)
       .then((movie) => {
         //const deleteMovie = (cards) => cards.filter((m) => (m._id !== movie._id))
@@ -207,9 +206,8 @@ function App() {
         console.log(movie._id);
       })
       .catch(err => { console.log(err) })
-    //.finally(() => {})
+    .finally(() => {setIsDelete(false)})
   }
-
 
   function logout() {
     setLoggedIn(false);
@@ -221,8 +219,6 @@ function App() {
 
   return (
     <div className="page">
-
-
       <>
         <CurrentUserContext.Provider value={currentUser}>
           <Header />

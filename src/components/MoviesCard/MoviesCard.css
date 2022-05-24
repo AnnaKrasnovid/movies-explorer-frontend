@@ -7,8 +7,10 @@
 }
 
 .movies-card__poster {
-  /*width: 270px;*/
+  width: 270px;
   height: 151px;
+  object-fit: cover;
+  width: 100%;
 }
 
 .movies-card__container {

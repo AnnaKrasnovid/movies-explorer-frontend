@@ -14,7 +14,8 @@ function MoviesCard(props) {
 
 
   function handleSaveMovie() {
-    //setIsLikeMovie(true)
+    console.log(props.movie);
+
     const newMovie = {
       country: props.movie.country || 'Нет данных',
       director: props.movie.director,
@@ -37,7 +38,7 @@ function MoviesCard(props) {
     if(location.pathname !== '/movies') {
       props.onDeleteMovie(props.movie)
     } else {
-      console.log(props.movie)
+      //console.log(props.movie)
       const nameRu = String(props.movie.nameRU)
       const movieToDeleteArray = props.savedMovies.filter(data => {
         const movieName = String(data.nameRU);
@@ -45,13 +46,17 @@ function MoviesCard(props) {
         return movieToDeleteName;
       })
       const movieToDelete = movieToDeleteArray[0]
+      console.log(movieToDelete)
       props.onDeleteMovie(movieToDelete)
     }
   }
 
   return (
     <li className="movies-card" >
+      <a href={props.movie.trailerLink}>
       <img className="movies-card__poster" src={(location.pathname === '/movies') ? `https://api.nomoreparties.co/${props.movie.image.url}` : props.movie.image} alt="Постер фильма" />
+      </a>
+
       <div className="movies-card__container">
         <h2 className="movies-card__title">{props.movie.nameRU}</h2>
         <button className={isLikedMovies} onClick={props.isLikeMovies ? handleDeleteMovie : handleSaveMovie}></button>
