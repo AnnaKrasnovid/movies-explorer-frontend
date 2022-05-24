@@ -7,37 +7,32 @@ import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
 function MoviesCardList(props) {
   const location = useLocation();
+  const locationMovies = location.pathname === '/movies';
   const moviesSaved = props.onMovieSearch ? props.foundMoviesInSavedMovies : props.movies;
 
-  const windowWidth = () => { return window.innerWidth }
+  const windowWidth = () => { return window.innerWidth };
   const [size, setSize] = React.useState(windowWidth());
 
   const [numberOfCards, setNumberOfCards] = React.useState(0);
   const [showMoreCards, setShowMoreCards] = React.useState(0);
   const [moviesToRender, setMoviesToRender] = React.useState([]);
- // const [isMount, setIsMount] = React.useState(true);
 
   React.useEffect(() => {
     handleShowCards()
-  }, [size, numberOfCards, showMoreCards])
+  }, [size, numberOfCards, showMoreCards]);
 
   React.useEffect(() => {
-    handleShowCardsParameters()
-   //return () => setIsMount(false)
-  }, [size])
-
-  function handleShowCardsParameters() {
     if (size >= 1280) {
-      setNumberOfCards(12)
-      setShowMoreCards(4)
+      setNumberOfCards(12);
+      setShowMoreCards(4);
     } else if (size > 480 && size < 1280) {
-      setNumberOfCards(8)
-      setShowMoreCards(2)
+      setNumberOfCards(8);
+      setShowMoreCards(2);
     } else if (size > 320 && size <= 480) {
-      setNumberOfCards(5)
-      setShowMoreCards(2)
+      setNumberOfCards(5);
+      setShowMoreCards(2);
     }
-  }
+  }, [size]);
 
   function handleShowCards() {
     const num = props.movies.length;
@@ -47,10 +42,10 @@ function MoviesCardList(props) {
 
   function handleButtonClickShowMore() {
     const remained = props.movies.length - moviesToRender.length;
-    console.log(remained)
+    //console.log(remained)
     if (remained > 0) {
-      const movie = props.movies.slice(moviesToRender.length, moviesToRender.length + showMoreCards)
-      setMoviesToRender([...moviesToRender, ...movie])
+      const movie = props.movies.slice(moviesToRender.length, moviesToRender.length + showMoreCards);
+      setMoviesToRender([...moviesToRender, ...movie]);
     }
   }
 
@@ -58,15 +53,13 @@ function MoviesCardList(props) {
     let timeOut;
 
     function handleResize() {
-      //очистит ранее получ.инфо
       clearTimeout(timeOut);
-      // сработает через 2 секунды
       timeOut = setTimeout(() => { setSize(windowWidth()) }, 1000);
     }
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [size])
+  }, [size]);
 
   function addLikeMovie(movie) {
     const arraySavedMovieId = [];
@@ -77,8 +70,8 @@ function MoviesCardList(props) {
   }
 
   function getFoundMoviesList() {
-    return /*props.movies*/moviesToRender.map((movie) => {
-      const like = addLikeMovie(movie)
+    return moviesToRender.map((movie) => {
+      const like = addLikeMovie(movie);
 
       return (
         <MoviesCard
@@ -113,8 +106,50 @@ function MoviesCardList(props) {
 
   return (
     <section className="movies">
+      { locationMovies ? ((props.isError || props.isNothingFound) ? (
+        props.isError ? (<span className="movies__error">Во время запроса произошла ошибка.
+          Возможно, проблема с соединением или сервер недоступен.
+          Подождите немного и попробуйте ещё раз
+        </span>) : (<span className="movies__error">Ничего не найдено</span>)
+      ) : (
+        <>
+          <ul className="movies-list movies-list_type_saved">
+            {getFoundMoviesList()}
+          </ul>
+            <ShowMoreButton
+              isNothingFound={props.isNothingFound}
+              movies={props.movies}
+              onShowMore={handleButtonClickShowMore}
+              moviesToRender={moviesToRender}
+              />
+        </>
+      )) : (
+        (props.isError || props.isNothingFound) ? (
+          props.isError ? (<span className="movies__error">Во время запроса произошла ошибка.
+            Возможно, проблема с соединением или сервер недоступен.
+            Подождите немного и попробуйте ещё раз
+          </span>) : (<span className="movies__error">Ничего не найдено</span>)
+        ) : (
+          <>
+            <ul className="movies-list movies-list_type_saved">
+              {getSavedMoviesList()}
+            </ul>
+          </>
+        )
+      )}
 
-      {props.isError || props.isNothingFound ? (
+
+
+
+
+    </section>
+  )
+}
+
+export default MoviesCardList;
+
+
+/*{(props.isError || props.isNothingFound) ? (
         props.isError ? (<span className="movies__error">Во время запроса произошла ошибка.
           Возможно, проблема с соединением или сервер недоступен.
           Подождите немного и попробуйте ещё раз
@@ -133,11 +168,4 @@ function MoviesCardList(props) {
               moviesToRender={moviesToRender} />
           ) : ""}
         </>
-      )}
-    </section>
-  )
-}
-
-export default MoviesCardList;
-
-
+      )} */

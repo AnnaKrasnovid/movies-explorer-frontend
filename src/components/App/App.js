@@ -36,25 +36,22 @@ function App() {
 
   const history = useHistory();
   const location = useLocation();
-
-
-
+  const locationMovies = location.pathname === '/movies';
 
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       const token = localStorage.getItem('token');
       auth.checkToken(token)
-        .then((data) => {
+        .then(() => {
           setLoggedIn(true);
           setIsUserChecked(true);
-
         })
         .catch((err) => {
           setIsUserChecked(true);
           console.log(err)
         })
     }
-  }, [])
+  }, []);
 
   React.useEffect(() => {
     if (loggedIn) {
@@ -67,7 +64,7 @@ function App() {
           console.log(err);
         })
     }
-  }, [loggedIn])
+  }, [loggedIn]);
 
   React.useEffect(() => {
     if (loggedIn) {
@@ -84,9 +81,21 @@ function App() {
     }
   }, [loggedIn, currentUser])
 
+  React.useEffect(() => {
+    if (JSON.parse(localStorage.getItem('movies')) && locationMovies) {
+      const films = JSON.parse(localStorage.getItem('movies'));
+
+      if (films.length !== 0 ) {
+        setFoundMovies(films);
+      } /*else {
+        setIsNothingFound(true);
+      }*/
+    }
+  }, [])
+
   function handleRegistration(data) {
     auth.register(data)
-      .then((data) => {
+      .then(() => {
         history.push("/signin");
       })
       .catch(err => {
@@ -111,11 +120,11 @@ function App() {
     apiMovies.getFoundMovies(query)
       .then((movies) => {
         setAllMovies(movies);
-        //console.log(movies)
         const filteredMovies = handleFoundMovies(query, movies, stateCheckbox);
         setFoundMovies(filteredMovies);
         checkFoundMoviesLength(filteredMovies);
         setIsError(false);
+        localStorage.setItem('movies', JSON.stringify(filteredMovies));
       })
       .catch(err => {
         setIsError(true);
@@ -125,14 +134,6 @@ function App() {
         setIsLoading(false);
       })
   }
-
-  /*const checkFoundMoviesLength = React.useCallback ((movies) => {
-    if(movies.length === 0) {
-      setIsNothingFound(true)
-    } else {
-      setIsNothingFound(false)
-    }
-  }, [])*/
 
   function checkFoundMoviesLength(movies) {
     if (movies.length === 0) {
@@ -150,6 +151,7 @@ function App() {
         const savedMoviesCurrentUser = savedMovies.filter(movie => movie.owner === currentUser._id);
         const filteredMovies = handleFoundMovies(query, savedMoviesCurrentUser, stateCheckbox);
         setFoundMoviesInSavedMovies(filteredMovies);
+        checkFoundMoviesLength(filteredMovies);
         console.log(filteredMovies);
         setIsError(false);
       })
@@ -198,13 +200,16 @@ function App() {
   function handleDeleteSavedMovie(movie) {
     apiMain.deleteMovieLike(movie)
       .then((movie) => {
+        //const deleteMovie = (cards) => cards.filter((m) => (m._id !== movie._id))
         setSavedMovies((cards) => cards.filter((m) => (m._id !== movie._id)));
         // setIsLiked(false)
+
         console.log(movie._id);
       })
       .catch(err => { console.log(err) })
     //.finally(() => {})
   }
+
 
   function logout() {
     setLoggedIn(false);

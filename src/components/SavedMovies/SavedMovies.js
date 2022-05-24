@@ -19,6 +19,7 @@ function SavedMovies(props) {
           isLikeMovies={props.isLikeMovies}
           isError={props.isError}
           isNothingFound={props.isNothingFound}
+          onFindMovies={props.onFindMovies}
         />
       )}
 
