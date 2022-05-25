@@ -113,7 +113,7 @@ function App() {
         setIsNothingFound(true);
       }
     }
-  }, []);
+  }, [locationMovies]);
 
   function handleRegistration(data) {
     auth.register(data)
