@@ -11,7 +11,7 @@ function AboutMe() {
           <h3 className="about-me__title">Анна</h3>
           <p className="about-me__info">Фронтенд-разработчик</p>
           <p className="about-me__text">Живу в Подмосковье, по образованию- инженер. В свободное время занимаюсь фотографией и делаю pet-project.
-           В процессе обучения было реализовано нескольно проектов, которые прошли код-ревью, продолжаю изучать новые технологии.</p>
+            В процессе обучения было реализовано нескольно проектов, которые прошли код-ревью, продолжаю изучать новые технологии.</p>
           <ul className="social-networks">
             <li>
               <a className="social-networks__link hover-link" href="#" target="blank">Facebook</a>

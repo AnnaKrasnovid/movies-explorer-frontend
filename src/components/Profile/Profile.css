@@ -83,15 +83,6 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-
-}
-
-.profile__error {
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 13px;
-  color: #EE3465;
-  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 1023px) {

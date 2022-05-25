@@ -5,7 +5,7 @@ function PageNotFound() {
   const history = useHistory();
 
   function handleGoBack() {
-    history.goBack()
+    history.goBack();
   }
 
   return (

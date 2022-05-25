@@ -2,9 +2,10 @@ import './Header.css';
 import React from 'react';
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
-import { Link, useLocation, Route } from 'react-router-dom';
+import { useLocation, Route } from 'react-router-dom';
 
 function Header() {
+  const location = useLocation();
 
   const endpoints = [
     "/",
@@ -12,8 +13,6 @@ function Header() {
     "/movies",
     "/saved-movies",
   ];
-
-  const location = useLocation();
 
   return (
     <Route exact path={endpoints}>

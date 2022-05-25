@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { Switch, Route,  useHistory, useLocation } from 'react-router-dom';
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -44,6 +44,17 @@ function App() {
   const [isErrorSavedMovies, setIsErrorSavedMovies] = React.useState(false);
   const [isNothingFoundSavedMovies, setIsNothingFoundSavedMovies] = React.useState(false);
 
+  const [errorStatusCodeRegistration, setErrorStatusCodeRegistration] = React.useState('');
+  const [isSuccessfulRegistration, setIsSuccessfulRegistration] = React.useState(false);
+
+  const [errorStatusCodeLogin, setErrorStatusCodeLogin] = React.useState('');
+  const [isSuccessfulLogin, setIsSuccessfulLogin] = React.useState(false);
+
+  const [errorStatusCodeProfile, setErrorStatusCodeProfile] = React.useState('');
+  const [isSuccessfulUpdateProfile, setIsSuccessfulUpdateProfile] = React.useState(false);
+
+  const [isErrorProfile, setIsErrorProfile] = React.useState(false);
+
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       const token = localStorage.getItem('token');
@@ -54,7 +65,7 @@ function App() {
         })
         .catch((err) => {
           setIsUserChecked(true);
-          console.log(err)
+          console.log(err);
         })
     }
   }, []);
@@ -89,7 +100,7 @@ function App() {
           setIsUserChecked(true);
         })
     }
-  }, [loggedIn, currentUser, isDelete])
+  }, [loggedIn, currentUser, isDelete]);
 
   React.useEffect(() => {
     if (JSON.parse(localStorage.getItem('movies')) && locationMovies) {
@@ -102,15 +113,18 @@ function App() {
         setIsNothingFound(true);
       }
     }
-  }, [])
+  }, []);
 
   function handleRegistration(data) {
     auth.register(data)
       .then(() => {
+        setIsSuccessfulRegistration(true);
         history.push("/signin");
       })
       .catch(err => {
         console.log(err);
+        setErrorStatusCodeRegistration(err);
+        setIsSuccessfulRegistration(false);
       })
   }
 
@@ -119,10 +133,12 @@ function App() {
       .then((res) => {
         localStorage.setItem('token', res.token);
         setLoggedIn(true);
+        setIsSuccessfulLogin(true);
         history.push("/movies");
       })
       .catch(err => {
         console.log(err);
+        setErrorStatusCodeLogin(err);
       })
   }
 
@@ -130,8 +146,15 @@ function App() {
     apiMain.updateProfileInfo(name, email)
       .then((data) => {
         setCurrentUser(data);
+        setIsErrorProfile(false);
+        setIsSuccessfulUpdateProfile(true);
       })
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        console.log(err);
+        setErrorStatusCodeProfile(err);
+        setIsSuccessfulUpdateProfile(false);
+        setIsErrorProfile(true);
+      })
   }
 
   function handleSearchMovies(query, stateCheckbox) {
@@ -177,24 +200,21 @@ function App() {
 
   function checkFoundMoviesLength(movies, stateIsNothingFound) {
     if (movies.length === 0) {
-      stateIsNothingFound(true)
+      stateIsNothingFound(true);
     } else {
-      stateIsNothingFound(false)
+      stateIsNothingFound(false);
     }
   }
 
   function handleAddMovieToSaved(newMovie) {
     apiMain.addMovieToSaved(newMovie)
       .then((newMovie) => {
-        setSavedMovies([newMovie, ...savedMovies])
-        setIsError(false)
-        console.log(newMovie._id);
-        console.log(newMovie.movieId);
-        console.log(newMovie.owner);
+        setSavedMovies([newMovie, ...savedMovies]);
+        setIsError(false);
       })
       .catch(err => {
-        setIsError(true)
-        console.log(err)
+        setIsError(true);
+        console.log(err);
       })
   }
 
@@ -216,7 +236,6 @@ function App() {
     localStorage.removeItem('stateCheckbox');
     localStorage.removeItem('query');
     setCurrentUser({ name: '', email: '' });
-    //console.log(currentUser)
     console.log(loggedIn)
   }
 
@@ -232,16 +251,30 @@ function App() {
             </Route>
 
             <Route path="/signup">
-              <Register handleRegistration={handleRegistration} />
+              <Register
+                handleRegistration={handleRegistration}
+                errorStarusCode={errorStatusCodeRegistration}
+                isSuccessfulRequest={isSuccessfulRegistration}
+              />
             </Route>
 
             <Route path="/signin">
-              <Login handleLogin={handleLogin} />
+              <Login
+                handleLogin={handleLogin}
+                errorStarusCode={errorStatusCodeLogin}
+                isSuccessfulRequest={isSuccessfulLogin}
+              />
             </Route>
 
             {isUserChecked ?
               <ProtectedRoute path="/profile" loggedIn={loggedIn} >
-                <Profile logout={logout} onUpdateUserInfo={handleUpdateUserInfo} />
+                <Profile
+                  logout={logout}
+                  onUpdateUserInfo={handleUpdateUserInfo}
+                  errorStarusCode={errorStatusCodeProfile}
+                 isErrorProfile={isErrorProfile}
+                  isSuccessfulRequest={isSuccessfulUpdateProfile}
+                />
               </ProtectedRoute>
               : null}
 

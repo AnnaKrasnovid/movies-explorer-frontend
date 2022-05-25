@@ -4,16 +4,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 function Navigation() {
-  const location = useLocation()
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  //console.log(location)
 
   function handleMenuOpen() {
-    setIsMenuOpen(true)
+    setIsMenuOpen(true);
   }
 
   function handleMenuClose() {
-    setIsMenuOpen(false)
+    setIsMenuOpen(false);
   }
 
   return (

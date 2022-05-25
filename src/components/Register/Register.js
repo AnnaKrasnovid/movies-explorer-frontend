@@ -1,26 +1,21 @@
 import './Register.css';
 import Logo from '../Logo/Logo';
+import Error from '../Error/Error';
 import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
+import React from 'react';
 
 function Register(props) {
-const { values,
-  handleChange,
-  errors,
-  isValid,
-  resetForm,
-  setValues,
-  setErrors,
-  setIsValid } = useFormValidation();
+  const { values, handleChange, errors, isValid } = useFormValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
     props.handleRegistration({
-        name: values.name,
-        email: values.email,
-        password: values.password
+      name: values.name,
+      email: values.email,
+      password: values.password
     })
-}
+  }
 
   return (
     <section className="entrance">
@@ -41,7 +36,7 @@ const { values,
               maxLength="40"
               value={values.name || ''}
               onChange={handleChange}
-              />
+            />
             <span id="name-input-error" className="form__error">{errors.name ? 'Имя должно содержать не менее 2 символов' : ''}</span>
           </div>
 
@@ -58,7 +53,7 @@ const { values,
               maxLength="40"
               value={values.email || ''}
               onChange={handleChange}
-              />
+            />
             <span id="email-input-error" className="form__error">{errors.email || ''}</span>
           </div>
 
@@ -73,10 +68,12 @@ const { values,
               autoComplete="on"
               required
               value={values.password || ''}
-              onChange={handleChange}/>
+              onChange={handleChange} />
             <span id="password-input-error" className="form__error">{errors.password || ''}</span>
           </div>
         </fieldset>
+
+        <Error errorStarusCode={props.errorStarusCode} isSuccessfulRequest={props.isSuccessfulRequest}/>
 
         <button className={`button button_type_form hover-button ${!isValid ? "button_disabled" : ""}`} type="submit" disabled={!isValid}>
           Зарегистрироваться
