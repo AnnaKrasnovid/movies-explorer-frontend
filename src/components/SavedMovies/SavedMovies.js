@@ -7,8 +7,8 @@ function SavedMovies(props) {
   return (
     <main className="movies-page">
       <SearchForm onFindMovies={props.onFindMovies} />
-      {props.isLoading ? <Preloader /> : (
 
+      {props.isLoading ? <Preloader /> : (
         <MoviesCardList
           allMovies={props.allMovies}
           movies={props.movies} // сохраненные фильмы
@@ -22,7 +22,6 @@ function SavedMovies(props) {
           onFindMovies={props.onFindMovies}
         />
       )}
-
     </main>
   )
 }

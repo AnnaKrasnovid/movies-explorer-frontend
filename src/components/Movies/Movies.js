@@ -3,11 +3,11 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-
 function Movies(props) {
   return (
     <main className="movies-page">
-      <SearchForm onFindMovies={props.onFindMovies} />
+      <SearchForm onFindMovies={props.onFindMovies}/>
+
       {props.isLoading ? <Preloader /> : (
         <MoviesCardList
           allMovies={props.allMovies}
@@ -20,10 +20,8 @@ function Movies(props) {
           isNothingFound={props.isNothingFound}
         />
       )}
-
     </main>
   )
 }
-
 
 export default Movies;

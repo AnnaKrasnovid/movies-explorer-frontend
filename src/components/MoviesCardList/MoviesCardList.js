@@ -1,7 +1,6 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useLocation } from 'react-router-dom';
-//import { sortingArrayId } from '../../utils/utils';
 import React from 'react';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
@@ -34,21 +33,6 @@ function MoviesCardList(props) {
     }
   }, [size]);
 
-  function handleShowCards() {
-    const num = props.movies.length;
-    const numberOfFilmsToBeShown = props.movies.slice(0, numberOfCards);
-    setMoviesToRender(numberOfFilmsToBeShown);
-  }
-
-  function handleButtonClickShowMore() {
-    const remained = props.movies.length - moviesToRender.length;
-    //console.log(remained)
-    if (remained > 0) {
-      const movie = props.movies.slice(moviesToRender.length, moviesToRender.length + showMoreCards);
-      setMoviesToRender([...moviesToRender, ...movie]);
-    }
-  }
-
   React.useEffect(() => {
     let timeOut;
 
@@ -60,6 +44,20 @@ function MoviesCardList(props) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [size]);
+
+  function handleShowCards() {
+    const numberOfFilmsToBeShown = props.movies.slice(0, numberOfCards);
+    setMoviesToRender(numberOfFilmsToBeShown);
+  }
+
+  function handleButtonClickShowMore() {
+    const remained = props.movies.length - moviesToRender.length;
+
+    if (remained > 0) {
+      const movie = props.movies.slice(moviesToRender.length, moviesToRender.length + showMoreCards);
+      setMoviesToRender([...moviesToRender, ...movie]);
+    }
+  }
 
   function addLikeMovie(movie) {
     const arraySavedMovieId = [];
@@ -103,7 +101,7 @@ function MoviesCardList(props) {
 
   return (
     <section className="movies">
-      { locationMovies ? ((props.isError || props.isNothingFound) ? (
+      {(props.isError || props.isNothingFound) ? (
         props.isError ? (<span className="movies__error">Во время запроса произошла ошибка.
           Возможно, проблема с соединением или сервер недоступен.
           Подождите немного и попробуйте ещё раз
@@ -111,53 +109,10 @@ function MoviesCardList(props) {
       ) : (
         <>
           <ul className="movies-list movies-list_type_saved">
-            {getFoundMoviesList()}
-          </ul>
-            <ShowMoreButton
-              isNothingFound={props.isNothingFound}
-              movies={props.movies}
-              onShowMore={handleButtonClickShowMore}
-              moviesToRender={moviesToRender}
-              />
-        </>
-      )) : (
-        (props.isError || props.isNothingFound) ? (
-          props.isError ? (<span className="movies__error">Во время запроса произошла ошибка.
-            Возможно, проблема с соединением или сервер недоступен.
-            Подождите немного и попробуйте ещё раз
-          </span>) : (<span className="movies__error">Ничего не найдено</span>)
-        ) : (
-          <>
-            <ul className="movies-list movies-list_type_saved">
-              {getSavedMoviesList()}
-            </ul>
-          </>
-        )
-      )}
-
-
-
-
-
-    </section>
-  )
-}
-
-export default MoviesCardList;
-
-
-/*{(props.isError || props.isNothingFound) ? (
-        props.isError ? (<span className="movies__error">Во время запроса произошла ошибка.
-          Возможно, проблема с соединением или сервер недоступен.
-          Подождите немного и попробуйте ещё раз
-        </span>) : (<span className="movies__error">Ничего не найдено</span>)
-      ) : (
-        <>
-          <ul className="movies-list movies-list_type_saved">
-            {(location.pathname === '/movies') ? getFoundMoviesList() : getSavedMoviesList()}
+            {locationMovies ? getFoundMoviesList() : getSavedMoviesList()}
           </ul>
 
-          {(location.pathname === '/movies') ? (
+          {locationMovies ? (
             <ShowMoreButton
               isNothingFound={props.isNothingFound}
               movies={props.movies}
@@ -165,4 +120,11 @@ export default MoviesCardList;
               moviesToRender={moviesToRender} />
           ) : ""}
         </>
-      )} */
+      )}
+    </section>
+  )
+}
+
+export default MoviesCardList;
+
+

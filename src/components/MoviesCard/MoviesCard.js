@@ -8,10 +8,8 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 function MoviesCard(props) {
   const currentUser = React.useContext(CurrentUserContext);
   const location = useLocation();
-  //const likeMovie = props.isLikeMovies.includes(props.movies.id)
-  const isLikedMovies = `movies-card__like-movie hover-button ${props.isLikeMovies ? 'movies-card__like-movie_active' : ''}`
-  //const isLikedMovies = props.savedMovies.includes()
 
+  const isLikedMovies = `movies-card__like-movie hover-button ${props.isLikeMovies ? 'movies-card__like-movie_active' : ''}`
 
   function handleSaveMovie() {
     console.log(props.movie);
