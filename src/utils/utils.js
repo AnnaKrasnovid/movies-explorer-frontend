@@ -1,23 +1,15 @@
-export function handleFoundMovies(query, movies, stateCheckbox) {
+export function handleFoundMovies(query, movies) {
   const keyword = query.toLowerCase();
+  const moviesFilter = movies.filter(item => {
+    const stringRU = String(item.nameRU.toLowerCase());
+    const search = stringRU.includes(keyword);
+    return search;
+  })
+  return moviesFilter;
+}
 
-  if (stateCheckbox === true) {
-    const moviesFilter = movies.filter(item => {
-      const stringRU = String(item.nameRU.toLowerCase());
-      //const stringEN = String(item.nameEN.toLowerCase());
-      const search = stringRU.includes(keyword) && item.duration < 40 //|| stringEN.includes(keyword);
-      return search;
-    })
-    return moviesFilter;
-  } else {
-    const moviesFilter = movies.filter(item => {
-      const stringRU = String(item.nameRU.toLowerCase());
-      //const stringEN = String(item.nameEN.toLowerCase());
-      const search = stringRU.includes(keyword) // || stringEN.includes(keyword);
-      return search;
-    })
-    return moviesFilter;
-  }
+export function filterShortFilm(movies) {
+  return movies.filter((film => film.duration < 40))
 }
 
 export function handleDuration(duration) {

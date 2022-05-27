@@ -4,7 +4,7 @@ import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import { useLocation, Route } from 'react-router-dom';
 
-function Header() {
+function Header(props) {
   const location = useLocation();
 
   const endpoints = [
@@ -16,12 +16,11 @@ function Header() {
 
   return (
     <Route exact path={endpoints}>
-      <header className={`header ${(location.pathname === '/') ? '' : 'header_type_logged-in'}`}>
-        <Logo />
-        <Navigation />
-      </header>
-    </Route>
-
+        <header className={`header ${(location.pathname === '/') ? '' : 'header_type_logged-in'}`}>
+          <Logo />
+          <Navigation loggedIn={props.loggedIn} />
+        </header>
+      </Route>
   )
 }
 

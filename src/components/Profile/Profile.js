@@ -8,10 +8,9 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function Profile(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, handleChange, setValues } = useFormValidation();
+  const { values, handleChange, setValues, setIsValid, isValid, errors, resetForm } = useFormValidation();
 
   const [isInputActive, setIsInputActive] = React.useState(false);
-  const [isInputDataChanged, setIsInputDataChanged] = React.useState(false);
 
   React.useEffect(() => {
     if (currentUser) {
@@ -20,10 +19,25 @@ function Profile(props) {
         email: currentUser.email
       })
     }
-  }, [currentUser, isInputDataChanged])
+  }, [currentUser])
+
+  React.useEffect(() => {
+    if(currentUser.name === values.name && currentUser.email === values.email) {
+      setIsValid(false)
+    }
+  }, [isValid, currentUser, values, props.isSuccessfulRequest])
+
+  React.useEffect(() => {
+    if(props.errorStarusCode) {
+      setIsValid(false);
+    }
+  }, [isValid, props.errorStarusCode, props.isSuccessfulRequest])
 
   function handleEditProfile() {
     setIsInputActive(true);
+    /*if(props.isSuccessfulRequest){
+      props.setIsSuccessfulRequest(!props.isSuccessfulRequest)
+    }*/
   }
 
   function handleSubmit(e) {
@@ -34,17 +48,15 @@ function Profile(props) {
       values.email,
     )
 
-    if (props.isSuccessfulRequest) {
+    if(!props.isSuccessfulRequest) {
       setIsInputActive(false);
-      setIsInputDataChanged(false);
-    } else {
+    } else  {
       setIsInputActive(true);
     }
   }
 
   function handleChangeUpdateUser(e) {
     handleChange(e);
-    setIsInputDataChanged(true);
   }
 
   return (
@@ -68,6 +80,7 @@ function Profile(props) {
               onChange={handleChangeUpdateUser}
               disabled={!isInputActive}>
             </input>
+            <span id="name-input-error" className="form__error">{errors.name || ''}</span>
           </div>
 
           <div className="profile__box">
@@ -83,21 +96,25 @@ function Profile(props) {
               onChange={handleChangeUpdateUser}
               disabled={!isInputActive}>
             </input>
+            <span id="email-input-error" className="form__error">{errors.email || ''}</span>
           </div>
         </fieldset>
 
-        {(!isInputDataChanged && !props.isErrorProfile) ? (
+        {!isInputActive ? (
+          <>
+          <span className="error">{props.isSuccessfulRequest ? 'Имя и email изменены!' : ''}</span>
           <div className="profile__link-container">
             <button className="button link link_type_profile hover-link" type="button" onClick={handleEditProfile}>Редактировать</button>
             <Link to="/" className="link link_type_logout hover-link" onClick={props.logout}>Выйти из аккаунта</Link>
           </div>
+          </>
         ) : (
           <div className="profile__button-container">
             <Error errorStarusCode={props.errorStarusCode} isSuccessfulRequest={props.isSuccessfulRequest} />
             <button
-              className={`button button_type_form hover-button ${props.isErrorProfile ? 'button_disabled' : ''}`}
+              className={`button button_type_form hover-button ${!isValid ? 'button_disabled' : ''}`}
               type="submit"
-              disabled={props.isErrorProfile}>
+              disabled={!isValid}>
               Сохранить
             </button>
           </div>
@@ -109,4 +126,5 @@ function Profile(props) {
 }
 
 export default Profile;
+
 

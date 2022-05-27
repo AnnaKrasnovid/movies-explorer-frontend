@@ -8,12 +8,12 @@ function Error(props) {
   const locationLogin = location.pathname === '/signin';
   const locationProfile = location.pathname === '/profile';
 
-  const [isRegistrationError, setIsRegistrationError] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
 
   React.useEffect(() => {
     handleErrorRegistration()
-  }, [props.errorStarusCode, isRegistrationError, errorMessage]);
+  }, [props.errorStarusCode, isError, errorMessage]);
 
 
   function handleErrorRegistration() {
@@ -23,19 +23,19 @@ function Error(props) {
       if (statusCode) {
         switch (statusCode) {
           case 500:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('При регистрации пользователя произошла ошибка');
             break;
           case 409:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('Пользователь с таким email уже существует');
             break;
           case 400:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('При регистрации произошла ошибка. Проверьте корректность введеного email');
             break;
           default:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('Произошла ошибка. Попробуйте немного позже.');
             break;
         }
@@ -44,23 +44,23 @@ function Error(props) {
       if (statusCode) {
         switch (statusCode) {
           case 500:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('На сервере произошла ошибка');
             break;
           case 409:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('Пользователь с таким email уже существует');
             break;
           case 401:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('Вы ввели неправильный логин или пароль');
             break;
           case 400:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('При регистрации произошла ошибка. Проверьте корректность введеного email');
             break;
           default:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('Произошла ошибка. Попробуйте немного позже.');
             break;
         }
@@ -69,23 +69,23 @@ function Error(props) {
       if (statusCode) {
         switch (statusCode) {
           case 500:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('При обновлении пользователя произошла ошибка');
             break;
           case 409:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('Пользователь с таким email уже существует');
             break;
           case 401:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('Вы ввели неправильный логин или пароль');
             break;
           case 400:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('При редактировании профиля произошла ошибка. Проверьте имя и email');
             break;
           default:
-            setIsRegistrationError(true);
+            setIsError(true);
             setErrorMessage('Произошла ошибка. Попробуйте немного позже.');
             break;
         }

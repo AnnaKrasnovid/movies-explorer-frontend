@@ -13,7 +13,7 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 import apiMovies from '../../utils/MoviesApi';
 import apiMain from '../../utils/MainApi';
-import { handleFoundMovies } from '../../utils/utils';
+import { handleFoundMovies, filterShortFilm } from '../../utils/utils';
 import * as auth from '../../utils/auth';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -24,7 +24,7 @@ function App() {
   const locationMovies = location.pathname === '/movies';
 
   const [isLoading, setIsLoading] = React.useState(false);
-  const [allMovies, setAllMovies] = React.useState([]);
+  //const [allMovies, setAllMovies] = React.useState([]);
   const [foundMovies, setFoundMovies] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [foundMoviesInSavedMovies, setFoundMoviesInSavedMovies] = React.useState([]);
@@ -35,7 +35,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false); // вошедший в систему
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
 
-  //проверка наличия пользователя, если есть то переходит в защщищенные роуты
+  //проверка наличия пользователя, если есть то переходит в защищенные роуты
   const [isUserChecked, setIsUserChecked] = React.useState(false);
 
   const [isError, setIsError] = React.useState(false);
@@ -52,8 +52,6 @@ function App() {
 
   const [errorStatusCodeProfile, setErrorStatusCodeProfile] = React.useState('');
   const [isSuccessfulUpdateProfile, setIsSuccessfulUpdateProfile] = React.useState(false);
-
-  const [isErrorProfile, setIsErrorProfile] = React.useState(false);
 
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -116,10 +114,17 @@ function App() {
   }, [locationMovies]);
 
   function handleRegistration(data) {
+    // подправить
+    const dataLogin = {
+      email: data.email,
+      password: data.password
+    }
+
     auth.register(data)
       .then(() => {
         setIsSuccessfulRegistration(true);
-        history.push("/signin");
+        handleLogin(dataLogin);
+        history.push("/movies");
       })
       .catch(err => {
         console.log(err);
@@ -146,14 +151,12 @@ function App() {
     apiMain.updateProfileInfo(name, email)
       .then((data) => {
         setCurrentUser(data);
-        setIsErrorProfile(false);
         setIsSuccessfulUpdateProfile(true);
       })
       .catch(err => {
         console.log(err);
         setErrorStatusCodeProfile(err);
         setIsSuccessfulUpdateProfile(false);
-        setIsErrorProfile(true);
       })
   }
 
@@ -161,12 +164,15 @@ function App() {
     setIsLoading(true)
     apiMovies.getFoundMovies(query)
       .then((movies) => {
-        setAllMovies(movies);
-        const filteredMovies = handleFoundMovies(query, movies, stateCheckbox);
-        setFoundMovies(filteredMovies);
-        checkFoundMoviesLength(filteredMovies, setIsNothingFound);
+        //setAllMovies(movies);
+        const filteredMovies = handleFoundMovies(query, movies);
+        const film = (stateCheckbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
+        setFoundMovies(film);
+        checkFoundMoviesLength(film, setIsNothingFound);
         setIsError(false);
-        localStorage.setItem('movies', JSON.stringify(filteredMovies));
+        localStorage.setItem('movies', JSON.stringify(film));
+        localStorage.setItem('query', query);
+        localStorage.setItem('stateCheckbox', stateCheckbox);
       })
       .catch(err => {
         setIsError(true);
@@ -179,23 +185,17 @@ function App() {
 
   function handleSearchSavedMovies(query, stateCheckbox) {
     setIsLoading(true)
-    apiMain.getSavedMoviesList()
-      .then((savedMovies) => {
-        setIsMovieSearch(true);
-        const savedMoviesCurrentUser = savedMovies.filter(movie => movie.owner === currentUser._id);
-        const filteredMovies = handleFoundMovies(query, savedMoviesCurrentUser, stateCheckbox);
-        setFoundMoviesInSavedMovies(filteredMovies);
-        checkFoundMoviesLength(filteredMovies, setIsNothingFoundSavedMovies);
-        console.log(filteredMovies);
-        setIsErrorSavedMovies(false);
-      })
-      .catch(err => {
-        console.log(err);
-        setIsErrorSavedMovies(true);
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+    setIsMovieSearch(true);
+    const filteredMovies = handleFoundMovies(query, savedMovies);
+    console.log(savedMovies)
+    console.log(filteredMovies)
+    const film = (stateCheckbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
+    setFoundMoviesInSavedMovies(film);
+    console.log(filterShortFilm(filteredMovies))
+    checkFoundMoviesLength(film, setIsNothingFoundSavedMovies);
+    console.log(isNothingFoundSavedMovies)
+    setIsErrorSavedMovies(false);
+    setIsLoading(false)
   }
 
   function checkFoundMoviesLength(movies, stateIsNothingFound) {
@@ -243,7 +243,7 @@ function App() {
     <div className="page">
       <>
         <CurrentUserContext.Provider value={currentUser}>
-          <Header />
+          <Header loggedIn={loggedIn} />
 
           <Switch>
             <Route exact path="/">
@@ -272,8 +272,8 @@ function App() {
                   logout={logout}
                   onUpdateUserInfo={handleUpdateUserInfo}
                   errorStarusCode={errorStatusCodeProfile}
-                 isErrorProfile={isErrorProfile}
                   isSuccessfulRequest={isSuccessfulUpdateProfile}
+                  setIsSuccessfulRequest={setIsSuccessfulUpdateProfile}
                 />
               </ProtectedRoute>
               : null}
@@ -283,7 +283,6 @@ function App() {
                 <Movies
                   isLoading={isLoading}
                   onFindMovies={handleSearchMovies}
-                  allMovies={allMovies}
                   movies={foundMovies}
                   onSaveMovie={handleAddMovieToSaved}
                   onDeleteMovie={handleDeleteSavedMovie}
@@ -299,7 +298,6 @@ function App() {
                 <SavedMovies
                   isLoading={isLoading}
                   onFindMovies={handleSearchSavedMovies}
-                  allMovies={allMovies}
                   movies={savedMovies}
                   foundMoviesInSavedMovies={foundMoviesInSavedMovies}
                   onMovieSearch={isMovieSearch}

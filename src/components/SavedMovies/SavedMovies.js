@@ -5,7 +5,7 @@ import Preloader from '../Preloader/Preloader';
 
 function SavedMovies(props) {
   return (
-    <main className="movies-page">
+    <main className="saved-movies">
       <SearchForm onFindMovies={props.onFindMovies} />
 
       {props.isLoading ? <Preloader /> : (

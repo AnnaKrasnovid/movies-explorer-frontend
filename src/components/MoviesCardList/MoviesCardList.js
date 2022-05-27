@@ -59,19 +59,8 @@ function MoviesCardList(props) {
     }
   }
 
-  /*function addLikeMovie(movie) {
-    const arraySavedMovieId = [];
-    props.savedMovies.map(item => arraySavedMovieId.push(item.movieId));
-    const stringSavedMovieId = String(arraySavedMovieId);
-    const like = stringSavedMovieId.includes(movie.id);
-    console.log(movie.id)
-
-    return like;
-  }*/
-
   function getFoundMoviesList() {
     return moviesToRender.map((movie) => {
-     // const like = addLikeMovie(movie);
      const like = props.savedMovies.find(i => {return i.movieId === movie.id})
 
       return (
