@@ -35,9 +35,6 @@ function Profile(props) {
 
   function handleEditProfile() {
     setIsInputActive(true);
-    /*if(props.isSuccessfulRequest){
-      props.setIsSuccessfulRequest(!props.isSuccessfulRequest)
-    }*/
   }
 
   function handleSubmit(e) {
@@ -64,8 +61,9 @@ function Profile(props) {
       <h2 className="profile__title">{`Привет, ${currentUser.name}!`}</h2>
       <form className="profile__form" onSubmit={handleSubmit} noValidate>
         <fieldset className="profile__container" >
-
+        <span id="name-input-error" className="profile__error">{errors.name || ''}</span>
           <div className="profile__box">
+
             <label className="profile__label" htmlFor="name-input">Имя</label>
             <input
               id="name-input"
@@ -80,7 +78,6 @@ function Profile(props) {
               onChange={handleChangeUpdateUser}
               disabled={!isInputActive}>
             </input>
-            <span id="name-input-error" className="form__error">{errors.name || ''}</span>
           </div>
 
           <div className="profile__box">
@@ -96,8 +93,9 @@ function Profile(props) {
               onChange={handleChangeUpdateUser}
               disabled={!isInputActive}>
             </input>
-            <span id="email-input-error" className="form__error">{errors.email || ''}</span>
+
           </div>
+          <span id="email-input-error" className="profile__error">{errors.email || ''}</span>
         </fieldset>
 
         {!isInputActive ? (

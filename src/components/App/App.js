@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+import { Switch, Route, useHistory, useLocation, Redirect } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -273,7 +273,6 @@ function App() {
                   onUpdateUserInfo={handleUpdateUserInfo}
                   errorStarusCode={errorStatusCodeProfile}
                   isSuccessfulRequest={isSuccessfulUpdateProfile}
-                  setIsSuccessfulRequest={setIsSuccessfulUpdateProfile}
                 />
               </ProtectedRoute>
               : null}
