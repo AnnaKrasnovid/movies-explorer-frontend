@@ -24,7 +24,7 @@ function App() {
   const locationMovies = location.pathname === '/movies';
 
   const [isLoading, setIsLoading] = React.useState(false);
-  //const [allMovies, setAllMovies] = React.useState([]);
+  const [allMovies, setAllMovies] = React.useState([]);
   const [foundMovies, setFoundMovies] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [foundMoviesInSavedMovies, setFoundMoviesInSavedMovies] = React.useState([]);
@@ -53,6 +53,11 @@ function App() {
   const [errorStatusCodeProfile, setErrorStatusCodeProfile] = React.useState('');
   const [isSuccessfulUpdateProfile, setIsSuccessfulUpdateProfile] = React.useState(false);
 
+  const checboxState = localStorage.getItem('stateCheckbox') === 'true' ? true : false;
+
+  const [queryKeyWord, setQueryKeyWord] = React.useState('');
+  const [statusChecbox, setStatusChecbox] = React.useState(checboxState);
+
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       const token = localStorage.getItem('token');
@@ -62,9 +67,11 @@ function App() {
           setIsUserChecked(true);
         })
         .catch((err) => {
-          setIsUserChecked(true);
+          setIsUserChecked(true); //?
           console.log(err);
         })
+    } else {
+      setIsUserChecked(true);
     }
   }, []);
 
@@ -160,11 +167,11 @@ function App() {
       })
   }
 
-  function handleSearchMovies(query, stateCheckbox) {
+  /*function handleSearchMovies(query, stateCheckbox)  {
     setIsLoading(true)
     apiMovies.getFoundMovies(query)
       .then((movies) => {
-        //setAllMovies(movies);
+        setAllMovies(movies);
         const filteredMovies = handleFoundMovies(query, movies);
         const film = (stateCheckbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
         setFoundMovies(film);
@@ -181,19 +188,59 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       })
+  }*/
+
+  function handleSearchMovies(query, stateCheckbox) {
+    setIsLoading(true);
+
+    setQueryKeyWord(query);
+    setStatusChecbox(stateCheckbox);
+
+    localStorage.setItem('query', query);
+    localStorage.setItem('stateCheckbox', stateCheckbox);
+
+    if (allMovies.length === 0) {
+      apiMovies.getFoundMovies(query)
+        .then((movies) => {
+          setAllMovies(movies);
+          const filteredMovies = handleFoundMovies(query, movies);
+          const film = (stateCheckbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
+          setFoundMovies(film);
+          checkFoundMoviesLength(film, setIsNothingFound);
+          setIsError(false);
+          localStorage.setItem('movies', JSON.stringify(film));
+          setIsLoading(false);
+        })
+        .catch(err => {
+          setIsError(true);
+          console.log(err);
+        })
+        .finally(() => {
+          console.log('я тут')
+          setIsLoading(false);
+        })
+    }
   }
+
+  React.useEffect(() => {
+    if (allMovies.length !== 0) {
+      const filteredMovies = handleFoundMovies(queryKeyWord, allMovies);
+      const film = (statusChecbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
+      setFoundMovies(film);
+      checkFoundMoviesLength(film, setIsNothingFound);
+      setIsError(false);
+      setIsLoading(false);
+      localStorage.setItem('movies', JSON.stringify(film));
+    }
+  }, [queryKeyWord, allMovies, statusChecbox])
 
   function handleSearchSavedMovies(query, stateCheckbox) {
     setIsLoading(true)
     setIsMovieSearch(true);
     const filteredMovies = handleFoundMovies(query, savedMovies);
-    console.log(savedMovies)
-    console.log(filteredMovies)
     const film = (stateCheckbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
     setFoundMoviesInSavedMovies(film);
-    console.log(filterShortFilm(filteredMovies))
     checkFoundMoviesLength(film, setIsNothingFoundSavedMovies);
-    console.log(isNothingFoundSavedMovies)
     setIsErrorSavedMovies(false);
     setIsLoading(false)
   }
@@ -235,14 +282,17 @@ function App() {
     localStorage.removeItem('movies');
     localStorage.removeItem('stateCheckbox');
     localStorage.removeItem('query');
+    setFoundMovies([]);
+    setSavedMovies([])
     setCurrentUser({ name: '', email: '' });
-    console.log(loggedIn)
   }
 
   return (
     <div className="page">
       <>
         <CurrentUserContext.Provider value={currentUser}>
+
+
           <Header loggedIn={loggedIn} />
 
           <Switch>
@@ -251,11 +301,11 @@ function App() {
             </Route>
 
             <Route path="/signup">
-              <Register
+              {!loggedIn ? <Register
                 handleRegistration={handleRegistration}
                 errorStarusCode={errorStatusCodeRegistration}
                 isSuccessfulRequest={isSuccessfulRegistration}
-              />
+              /> : <Redirect exact to="/movies" />}
             </Route>
 
             <Route path="/signin">
@@ -306,6 +356,8 @@ function App() {
                 />
               </ProtectedRoute>
               : null}
+
+
 
             <Route path="*">
               <PageNotFound />

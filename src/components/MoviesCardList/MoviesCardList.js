@@ -31,7 +31,7 @@ function MoviesCardList(props) {
       setNumberOfCards(5);
       setShowMoreCards(2);
     }
-  }, [size]);
+  }, [size, props.movies]);
 
   React.useEffect(() => {
     let timeOut;

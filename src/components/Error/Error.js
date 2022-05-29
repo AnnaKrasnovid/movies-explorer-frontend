@@ -30,6 +30,10 @@ function Error(props) {
             setIsError(true);
             setErrorMessage('Пользователь с таким email уже существует');
             break;
+          case 401:
+            setIsError(true);
+            setErrorMessage('Вы ввели неправильный логин или пароль');
+            break;
           case 400:
             setIsError(true);
             setErrorMessage('При регистрации произошла ошибка. Проверьте корректность введеного email');

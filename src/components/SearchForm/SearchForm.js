@@ -26,7 +26,6 @@ function SearchForm(props) {
 
   function handleCheckbox() {
     setCheckbox(!checkbox);
-    console.log(!checkbox)
     handleSubmitСheckbox();
   }
 
@@ -45,6 +44,7 @@ function SearchForm(props) {
   function handleSubmitСheckbox() {
     props.onFindMovies(values.search, !checkbox);
   }
+
 
   return (
     <section className="search">
