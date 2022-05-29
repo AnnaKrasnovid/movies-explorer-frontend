@@ -43,7 +43,7 @@
   background-image: url(../../images/icon-like-active.svg);
 }
 
-.movies-card__like-movie_active:hover {
+.movies-card__dislike-movie {
   background-image: url(../../images/icon-delete-like.svg);
   height: 24px;
   width: 24px;

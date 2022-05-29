@@ -151,6 +151,7 @@ function App() {
       .catch(err => {
         console.log(err);
         setErrorStatusCodeLogin(err);
+        setIsSuccessfulLogin(false);
       })
   }
 
@@ -216,7 +217,6 @@ function App() {
           console.log(err);
         })
         .finally(() => {
-          console.log('я тут')
           setIsLoading(false);
         })
     }
@@ -309,11 +309,11 @@ function App() {
             </Route>
 
             <Route path="/signin">
-              <Login
+              {!loggedIn ? <Login
                 handleLogin={handleLogin}
                 errorStarusCode={errorStatusCodeLogin}
                 isSuccessfulRequest={isSuccessfulLogin}
-              />
+              /> : <Redirect exact to="/movies" />}
             </Route>
 
             {isUserChecked ?
@@ -357,11 +357,11 @@ function App() {
               </ProtectedRoute>
               : null}
 
-
-
-            <Route path="*">
-              <PageNotFound />
-            </Route>
+            {isUserChecked ?
+              <Route path="*">
+                {loggedIn ? <PageNotFound /> : <Redirect exact to="/" />}
+              </Route>
+              : null}
           </Switch>
 
           <Footer />

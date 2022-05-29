@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children, loggedIn }) => {
       return children;
     };
 
-    return <Redirect to="/signin" />
+    return <Redirect to="/" />
   }
 
 export default ProtectedRoute;

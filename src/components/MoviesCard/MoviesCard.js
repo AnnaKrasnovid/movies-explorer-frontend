@@ -2,11 +2,10 @@ import './MoviesCard.css';
 import React from 'react';
 import { handleDuration } from '../../utils/utils';
 import { useLocation } from 'react-router-dom';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
-
 
 function MoviesCard(props) {
   const location = useLocation();
+  const locationMovies = location.pathname === '/movies';
 
   function handleSaveMovie() {
     console.log(props.movie);
@@ -51,13 +50,19 @@ function MoviesCard(props) {
           src={(location.pathname === '/movies') ? `https://api.nomoreparties.co/${props.movie.image.url}` : props.movie.image}
           alt="Постер фильма" />
       </a>
-
       <div className="movies-card__container">
         <h2 className="movies-card__title">{props.movie.nameRU}</h2>
-        <button
-          className={`movies-card__like-movie hover-button ${props.isLikeMovies ? 'movies-card__like-movie_active' : ''}`}
-          onClick={props.isLikeMovies ? handleDeleteMovie : handleSaveMovie}>
-        </button>
+        {locationMovies ? (
+          <button
+            className={`movies-card__like-movie hover-button ${props.isLikeMovies ? 'movies-card__like-movie_active' : ''}`}
+            onClick={props.isLikeMovies ? handleDeleteMovie : handleSaveMovie}>
+          </button>
+        ) : (
+          <button
+            className="movies-card__like-movie hover-button movies-card__dislike-movie"
+            onClick={handleDeleteMovie}>
+          </button>
+        )}
       </div>
       <p className="movies-card__duration">{handleDuration(props.movie.duration)}</p>
     </li>
@@ -65,3 +70,4 @@ function MoviesCard(props) {
 }
 
 export default MoviesCard;
+

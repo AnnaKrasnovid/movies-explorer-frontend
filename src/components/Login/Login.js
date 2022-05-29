@@ -17,8 +17,8 @@ function Login(props) {
       password: values.password,
       email: values.email,
     });
-    setValues('');
-    setIsValid(false);
+    //setValues('');
+    //setIsValid(false);
   }
 
   return (
