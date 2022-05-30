@@ -135,6 +135,19 @@
   background-color: #2BE080;
 }
 
+.search__error {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.38;
+  color: #EE3465;
+  margin-left: 40px;
+  display: none;
+}
+
+.search__error_active {
+  display: block;
+}
+
 
 @media screen and (max-width: 1023px) {
   .search {

@@ -1,37 +1,52 @@
 import './Navigation.css';
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
-function Navigation() {
-  const location = useLocation()
+function Navigation(props) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  //console.log(location)
 
   function handleMenuOpen() {
-    setIsMenuOpen(true)
+    setIsMenuOpen(true);
   }
 
   function handleMenuClose() {
-    setIsMenuOpen(false)
+    setIsMenuOpen(false);
   }
 
   return (
     <div className="navigation">
-      {!(location.pathname === '/') ?
+      {props.loggedIn ?
         (<>
           <button className="button button-burger" onClick={handleMenuOpen}></button>
-          <nav className={`navigation__container-menu ${isMenuOpen ? "navigation__container-menu_opened" : ""}`}>
-            <ul className="navigation__container navigation__container_type_logged-in">
+          <nav className={`navigation__container-menu ${isMenuOpen ? "navigation__container-menu_opened" : ""}`} onClick={handleMenuClose}>
+            <ul className="navigation__container navigation__container_type_logged-in" onClick={e => { e.stopPropagation() }}>
               <div className="navigation__box">
                 <li>
-                  <NavLink exact to="/" className="link link_type_logged-in hover-link" onClick={handleMenuClose}>Главная</NavLink>
+                  <NavLink
+                    exact to="/"
+                    className="link link_type_logged-in hover-link"
+                    onClick={handleMenuClose}>
+                    Главная
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/movies" className="link link_type_logged-in hover-link" activeClassName="link_active" onClick={handleMenuClose}>Фильмы</NavLink>
+                  <NavLink
+                    to="/movies"
+                    className="link link_type_logged-in hover-link"
+                    activeClassName="link_active"
+                    onClick={handleMenuClose}>
+                    Фильмы
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/saved-movies" className="link link_type_logged-in hover-link" activeClassName="link_active" onClick={handleMenuClose}>Сохранённые фильмы</NavLink>
+                  <NavLink
+                    to="/saved-movies"
+                    className="link link_type_logged-in hover-link"
+                    activeClassName="link_active"
+                    onClick={handleMenuClose}>
+                    Сохранённые фильмы
+                  </NavLink>
                 </li>
               </div>
               <li>
