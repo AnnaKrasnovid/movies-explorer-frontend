@@ -45,7 +45,6 @@ function SearchForm(props) {
     props.onFindMovies(values.search, !checkbox);
   }
 
-
   return (
     <section className="search">
 

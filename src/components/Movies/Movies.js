@@ -10,7 +10,7 @@ function Movies(props) {
 
       {props.isLoading ? <Preloader /> : (
         <MoviesCardList
-          movies={props.movies} //найденные фильмы
+          movies={props.movies}
           onSaveMovie={props.onSaveMovie}
           onDeleteMovie={props.onDeleteMovie}
           savedMovies={props.savedMovies}

@@ -16,9 +16,7 @@ function Login(props) {
     props.handleLogin({
       password: values.password,
       email: values.email,
-    });
-    //setValues('');
-    //setIsValid(false);
+    })
   }
 
   return (

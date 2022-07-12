@@ -10,7 +10,6 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
-import Preloader from '../Preloader/Preloader';
 import apiMovies from '../../utils/MoviesApi';
 import apiMain from '../../utils/MainApi';
 import { handleFoundMovies, filterShortFilm } from '../../utils/utils';
@@ -120,8 +119,19 @@ function App() {
     }
   }, [locationMovies]);
 
+  React.useEffect(() => {
+    if (allMovies.length !== 0) {
+      const filteredMovies = handleFoundMovies(queryKeyWord, allMovies);
+      const film = (statusChecbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
+      setFoundMovies(film);
+      checkFoundMoviesLength(film, setIsNothingFound);
+      setIsError(false);
+      setIsLoading(false);
+      localStorage.setItem('movies', JSON.stringify(film));
+    }
+  }, [queryKeyWord, allMovies, statusChecbox])
+
   function handleRegistration(data) {
-    // подправить
     const dataLogin = {
       email: data.email,
       password: data.password
@@ -168,32 +178,8 @@ function App() {
       })
   }
 
-  /*function handleSearchMovies(query, stateCheckbox)  {
-    setIsLoading(true)
-    apiMovies.getFoundMovies(query)
-      .then((movies) => {
-        setAllMovies(movies);
-        const filteredMovies = handleFoundMovies(query, movies);
-        const film = (stateCheckbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
-        setFoundMovies(film);
-        checkFoundMoviesLength(film, setIsNothingFound);
-        setIsError(false);
-        localStorage.setItem('movies', JSON.stringify(film));
-        localStorage.setItem('query', query);
-        localStorage.setItem('stateCheckbox', stateCheckbox);
-      })
-      .catch(err => {
-        setIsError(true);
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      })
-  }*/
-
   function handleSearchMovies(query, stateCheckbox) {
     setIsLoading(true);
-
     setQueryKeyWord(query);
     setStatusChecbox(stateCheckbox);
 
@@ -222,20 +208,8 @@ function App() {
     }
   }
 
-  React.useEffect(() => {
-    if (allMovies.length !== 0) {
-      const filteredMovies = handleFoundMovies(queryKeyWord, allMovies);
-      const film = (statusChecbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
-      setFoundMovies(film);
-      checkFoundMoviesLength(film, setIsNothingFound);
-      setIsError(false);
-      setIsLoading(false);
-      localStorage.setItem('movies', JSON.stringify(film));
-    }
-  }, [queryKeyWord, allMovies, statusChecbox])
-
   function handleSearchSavedMovies(query, stateCheckbox) {
-    setIsLoading(true)
+    setIsLoading(true);
     setIsMovieSearch(true);
     const filteredMovies = handleFoundMovies(query, savedMovies);
     const film = (stateCheckbox === true) ? filterShortFilm(filteredMovies) : filteredMovies;
@@ -266,7 +240,7 @@ function App() {
   }
 
   function handleDeleteSavedMovie(movie) {
-    setIsDelete(true)
+    setIsDelete(true);
     apiMain.deleteMovieLike(movie)
       .then((movie) => {
         setSavedMovies((cards) => cards.filter((m) => (m._id !== movie._id)));
@@ -283,7 +257,7 @@ function App() {
     localStorage.removeItem('stateCheckbox');
     localStorage.removeItem('query');
     setFoundMovies([]);
-    setSavedMovies([])
+    setSavedMovies([]);
     setCurrentUser({ name: '', email: '' });
   }
 
@@ -291,7 +265,6 @@ function App() {
     <div className="page">
       <>
         <CurrentUserContext.Provider value={currentUser}>
-
 
           <Header loggedIn={loggedIn} />
 
@@ -365,6 +338,7 @@ function App() {
           </Switch>
 
           <Footer />
+
         </ CurrentUserContext.Provider>
       </>
     </div>

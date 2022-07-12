@@ -66,11 +66,6 @@
 }
 
 @media screen and (max-width: 1023px) {
-  /*.movies-card {
-    gap:30px;
-
-  }*/
-
   .movies-card__poster {
     height: 190px;
   }

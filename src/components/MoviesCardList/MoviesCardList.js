@@ -17,6 +17,18 @@ function MoviesCardList(props) {
   const [moviesToRender, setMoviesToRender] = React.useState([]);
 
   React.useEffect(() => {
+    let timeOut;
+
+    function handleResize() {
+      clearTimeout(timeOut);
+      timeOut = setTimeout(() => { setSize(windowWidth()) }, 1000);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [size]);
+
+  React.useEffect(() => {
     handleShowCards()
   }, [size, numberOfCards, showMoreCards]);
 
@@ -32,18 +44,6 @@ function MoviesCardList(props) {
       setShowMoreCards(2);
     }
   }, [size, props.movies]);
-
-  React.useEffect(() => {
-    let timeOut;
-
-    function handleResize() {
-      clearTimeout(timeOut);
-      timeOut = setTimeout(() => { setSize(windowWidth()) }, 1000);
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [size]);
 
   function handleShowCards() {
     const numberOfFilmsToBeShown = props.movies.slice(0, numberOfCards);

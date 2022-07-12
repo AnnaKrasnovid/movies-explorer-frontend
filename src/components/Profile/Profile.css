@@ -40,11 +40,6 @@
   padding: 16px 0;
 }
 
-/*.profile__box:last-child {
-  border-bottom: none;
-}*/
-
-
 .profile__box:nth-child(3) {
   border-bottom: none;
 }

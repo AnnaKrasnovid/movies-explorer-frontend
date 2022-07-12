@@ -8,8 +8,6 @@ function MoviesCard(props) {
   const locationMovies = location.pathname === '/movies';
 
   function handleSaveMovie() {
-    console.log(props.movie);
-
     const newMovie = {
       country: props.movie.country || 'Нет данных',
       director: props.movie.director,

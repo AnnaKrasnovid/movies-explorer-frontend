@@ -63,14 +63,6 @@ class MainApi {
     .then(this._responseStatus)
   }
 
-  /*removeCard(data) {
-    return fetch (`${this._baseUrl}/cards/${data._id}`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-    .then(this._responseStatus)
-  }*/
-
   _getToken() {
     return `Bearer ${localStorage.getItem('token')}`
   }
@@ -85,10 +77,6 @@ class MainApi {
 
 const apiMain = new MainApi({
   baseUrl: 'https://api.movies.krasnovid.nomoredomains.work',
- /* headers: {
-   //'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    'Content-Type': 'application/json',
-  }*/
 });
 
 export default apiMain;
